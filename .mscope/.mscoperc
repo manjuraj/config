@@ -1,0 +1,41 @@
+# ~/.mscope/.mscope - mscope script
+#
+# @author: Manju
+# @email: manj@cs.stanford.edu
+# @lastedited: 09/05/2007
+
+export CSCOPE_DB=~/.mscope/cscope.out
+
+function mscope {
+    echo -n "Building cscope DB ... "
+    rm -f ~/.mscope/cscope.files
+
+    LOC=$MTREE
+
+    # src/...
+    #  |-- nginx/
+    #  `-- glibc/
+    #
+    LOC=$MTREE/nginx
+    find $LOC -regex ".*\.[ch]" -print >> ~/.mscope/cscope.files
+
+    LOC=$MTREE/glibc
+    find $LOC -regex ".*\.[ch]" -print >> ~/.mscope/cscope.files
+
+    cd ~/.mscope
+    cscope -b
+    # cscope -b -q -k
+    cd - >> /dev/null
+    echo "done"
+};
+
+# LNX=/home/jru/linux-2.4.18
+# cd /
+# find  $LNX                                                            \
+# -path "$LNX/arch/*" ! -path "$LNX/arch/i386*" -prune -o               \
+# -path "$LNX/include/asm-*" ! -path "$LNX/include/asm-i386*" -prune -o \
+# -path "$LNX/tmp*" -prune -o                                           \
+# -path "$LNX/Documentation*" -prune -o                                 \
+# -path "$LNX/scripts*" -prune -o                                       \
+# -path "$LNX/drivers*" -prune -o                                       \
+# -name "*.[chxsS]" -print >/home/jru/mscope/mscope.files

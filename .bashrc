@@ -46,22 +46,22 @@ xterm-color)
     ;;
 *)
     # PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
-    # force color prompt.
+    # force color prompt
     PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\] \$ '
     ;;
 esac
 
 #
-# Source Aliases.
+# Source Aliases
 #
-# See /usr/share/doc/bash-doc/examples in the bash-doc package.
+# See /usr/share/doc/bash-doc/examples in the bash-doc package
+#
 if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
 
 #
-# Source User-defined Bash Functions.
-#
+# Source User-defined Bash Functions
 #
 if [ -f ~/.bash_functions ]; then
     . ~/.bash_functions
@@ -71,20 +71,20 @@ fi
 # Misc :)
 #
 
-# Enable programmable completion features.
+# Enable programmable completion features
 if [ -f /etc/bash_completion ]; then
     . /etc/bash_completion
 fi
 
 #
-# My customization.
+# My customization
 #
 if [ -f ~/.bash_m ]; then
     . ~/.bash_m
 fi
 
 #
-# Private
+# Private customization
 #
 if [ -f ~/.bash_private ]; then
     . ~/.bash_private

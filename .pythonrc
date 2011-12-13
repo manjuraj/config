@@ -1,0 +1,30 @@
+# ~/.pythonrc
+#
+# Enable auto-completion and a stored history file of commands to your Python
+# interactive interpreter
+#
+# Requires Python 2.0+, readline
+# Autocomplete is bound to the Tab key
+#
+# Store this file in ~/.pythonrc, and set an environment variable to point
+# to it in .bash_m [ export PYTHONSTARTUP=~/.pythonrc ]
+
+import os
+import sys
+
+import atexit
+import readline
+import rlcompleter
+
+historyPath = os.path.expanduser("~/.pyhistory")
+
+def save_history(historyPath=historyPath):
+    import readline
+    readline.write_history_file(historyPath)
+
+if os.path.exists(historyPath):
+    readline.read_history_file(historyPath)
+
+readline.parse_and_bind("tab: complete")
+atexit.register(save_history)
+del atexit, readline, rlcompleter, save_history, historyPath

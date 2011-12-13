@@ -27,12 +27,12 @@ alias p4d='p5 diff ...'
 
 # Git
 
-# cscope + vim
+# Cscope + vim
 if [ -f ~/.mscope/.mscoperc ]; then
     . ~/.mscope/.mscoperc
 fi
 
-# ctags + vim
+# Ctags + vim
 if [ -f ~/.mtags/.mtagsrc ]; then
     . ~/.mtags/.mtagsrc
 fi
@@ -41,5 +41,8 @@ fi
 alias cdt='cd ${MTREE}'
 alias cdn='cd ${NOTES}'
 
-# lib
+# Lib
 export LD_LIBRARY_PATH=/usr/local/lib
+
+# Python
+export PYTHONSTARTUP=$HOME/.pythonrc

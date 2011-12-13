@@ -1,0 +1,18 @@
+[user]
+   name = Manju Rajashekhar
+   email = manj@twitter.com
+[alias]
+   co = checkout
+   st = status
+   ci = commit
+	d = difftool
+[color]
+   ui = auto
+[core]
+	editor = vim
+[push]
+    default = current
+[diff]
+	tool = vimdiff
+[difftool]
+	prompt = false

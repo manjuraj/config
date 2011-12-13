@@ -1,0 +1,53 @@
+# Set PATH.
+# PATH=
+# export PATH
+
+# Depot
+# export DEPOT=' '
+# export DEPOT_EKAM=${DEPOT}/mtree-ekaM
+# export DEPOT_DVE=${DEPOT}/mtree-dve
+# export DEPOT_TRIINI=${DEPOT}/mtree-triiNi
+# export DEPOT_CHATVAARI=${DEPOT}/mtree-chatvaari
+# export DEPOT_PANNCHA=${DEPOT}/mtree-paJNcha
+
+# Current tree.
+export MTREE=~/workspace
+
+# Misc.
+export NOTES=${MTREE}/Dropbox/notes
+
+# Build environment.
+
+# Local functions.
+
+function mtree {
+    echo "Using tree = "$MTREE
+};
+
+
+# Perforce.
+export P4CONFIG=.p4config
+export P4EDITOR=vim
+export EDITOR=vim
+export P4USER=manj
+alias p4o='p5 opened ...'
+alias p4d='p5 diff ...'
+
+# Git
+
+# cscope + vim.
+if [ -f ~/.mscope/.mscoperc ]; then
+    . ~/.mscope/.mscoperc
+fi
+
+# ctags + vim.
+if [ -f ~/.mtags/.mtagsrc ]; then
+    . ~/.mtags/.mtagsrc
+fi
+
+# Custom Aliases
+alias cdt='cd ${MTREE}'
+alias cdn='cd ${NOTES}'
+
+# lib
+export LD_LIBRARY_PATH=/usr/local/lib

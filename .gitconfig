@@ -5,14 +5,14 @@
    co = checkout
    st = status
    ci = commit
-	d = difftool
+    d = difftool
 [color]
-   ui = auto
+    ui = auto
 [core]
-	editor = vim
+    editor = vim
 [push]
     default = current
 [diff]
-	tool = vimdiff
+    tool = vimdiff
 [difftool]
-	prompt = false
+    prompt = false

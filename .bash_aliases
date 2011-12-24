@@ -36,6 +36,24 @@ export GREP_COLOR='1;31'
 alias grepn='grep -n'
 alias gcat='grep -n ".*\"'
 
+# Maven 
+export MAVEN_OPTS=-Xmx1024m
+mvn-color()
+{
+    MAVEN=`which mvn`
+    $MAVEN $@ | sed -e "s/\(\[INFO\]\ \-.*\)/[36;01m\1[m/g" \
+        -e "s/\(\[INFO\]\ >>> .*\)/[32;01m\1[m/g" \
+        -e "s/\(\[INFO\]\ <<< .*\)/[32;01m\1[m/g" \
+        -e "s/\(\[INFO\]\ Building .*\)/[36;01m\1[m/g" \
+        -e "s/\(\[INFO\]\ \[.*\)/01m\1[m/g" \
+        -e "s/\(\[INFO\]\ BUILD SUCCESS.*\)/[01;32m\1[m/g" \
+        -e "s/\(\[INFO\]\ BUILD FAILURE.*\)/[01;31m\1[m/g" \
+        -e "s/\(\[WARNING\].*\)/[01;33m\1[m/g" \
+        -e "s/\(\[ERROR\].*\)/[01;31m\1[m/g" \
+        -e "s/Tests run: \([^,]*\), Failures: \([^,]*\), Errors: \([^,]*\), Skipped: \([^,]*\)/[32mTests run: \1[m, Failures: [01;31m\2[m, Errors: [01;31m\3[m, Skipped: [01;33m\4[m/g"
+}
+alias mvn='mvn-color'
+
 # Editors
 alias vi='vim'
 alias vim='vim -o'

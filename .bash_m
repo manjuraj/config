@@ -27,6 +27,9 @@ alias p4d='p5 diff ...'
 
 # Git
 
+# Maven
+export MAVEN_OPTS=-Xmx1024m
+
 # Cscope + vim
 if [ -f ~/.mscope/.mscoperc ]; then
     . ~/.mscope/.mscoperc

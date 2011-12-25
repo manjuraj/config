@@ -52,19 +52,19 @@ xterm-color)
 esac
 
 #
+# Source User-defined Bash Functions
+#
+if [ -f ~/.bash_functions ]; then
+    . ~/.bash_functions
+fi
+
+#
 # Source Aliases
 #
 # See /usr/share/doc/bash-doc/examples in the bash-doc package
 #
 if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
-fi
-
-#
-# Source User-defined Bash Functions
-#
-if [ -f ~/.bash_functions ]; then
-    . ~/.bash_functions
 fi
 
 #

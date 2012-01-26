@@ -563,3 +563,9 @@ autocmd BufWinLeave * call clearmatches()
 "
 " **TWITTER
 " autocmd BufWritePre *.scala :%s/\s+$//e
+
+" notes on using vim + clipboard
+" ensure that your vim is compiled with +clipboard
+" use "*yG to yank everything in file -- use double-quote asterix before any yank command
+" use "*p to paste in vim
+set clipboard=unnamed

@@ -38,7 +38,7 @@ syn keyword scalaObject object nextgroup=scalaClassName skipwhite
 syn keyword scalaTrait trait nextgroup=scalaClassName skipwhite
 syn match scalaDefName "[^ =:;([]\+" contained nextgroup=scalaDefSpecializer skipwhite
 syn match scalaValName "[^ =:;([]\+" contained
-syn match scalaVarName "[^ =:;([]\+" contained 
+syn match scalaVarName "[^ =:;([]\+" contained
 syn match scalaClassName "[^ =:;(\[]\+" contained nextgroup=scalaClassSpecializer skipwhite
 syn region scalaDefSpecializer start="\[" end="\]" contained contains=scalaDefSpecializer
 syn region scalaClassSpecializer start="\[" end="\]" contained contains=scalaClassSpecializer
@@ -149,8 +149,3 @@ let b:current_syntax = "scala"
 " hi scalaMethodCall gui=italic
 " hi scalaValName gui=underline
 " hi scalaVarName gui=underline
-
-" Use 2 space instead of tab during format
-set expandtab
-set shiftwidth=2
-set softtabstop=2

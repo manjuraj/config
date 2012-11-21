@@ -2,15 +2,15 @@
 #
 # @author: Manju.
 # @email: manj@cs.stanford.edu
-# @lastedited: 10/10/2010
+# @lastedited: 06/25/2012
 
 if [ -f ~/.profile ]; then
-    . ~/.profile
+    source ~/.profile
 fi
 
 # Get the aliases and functions
 if [ -f ~/.bashrc ]; then
-    . ~/.bashrc
+    source ~/.bashrc
 fi
 
 export BASH_ENV=$HOME/.bashrc

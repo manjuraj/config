@@ -7,12 +7,12 @@
    ci = commit
     d = difftool
 [color]
-    ui = auto
+   ui = auto
 [core]
-    editor = vim
+   editor = vim
 [push]
-    default = current
+   default = current
 [diff]
-    tool = vimdiff
+   tool = vimdiff
 [difftool]
-    prompt = false
+   prompt = false

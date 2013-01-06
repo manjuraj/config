@@ -18,6 +18,9 @@ alias l='ls -1'
 alias ll='ls -la'
 alias lh='ls -lah'
 
+# Change directory
+alias cdt='cd ~/workspace'
+
 # Human readable figures
 alias df='df -h'
 alias du='du -h'

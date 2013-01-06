@@ -2,10 +2,34 @@
 #
 # @author: Manju.
 # @email: manj@cs.stanford.edu
-# @lastedited: 10/10/2010
+# @lastedited: 01/05/2013
+
+# ~/.bashrc versus ~/.bash_profile
 
 #
-# History options.
+# ~/.bash_profile is executed for login shells while ~/.bashrc is executed
+# for interactive non-login shells.
+#
+# When you login (type username and password) via console, either sitting at
+# the machine, or remotely via ssh: ~/.bash_profile is executed to configure
+# your shell before the initial command prompt.  But, if you have already
+# logged into your machine and open a new terminal window (xterm) inside
+# Gnome or KDE, then .bashrc is executed before the window command prompt.
+# ~/.bashrc is also run when you start a new bash instance by typing
+# /bin/bash in a terminal.
+#
+# An exception to the terminal window guidelines is Mac OS X Terminal.app,
+# which runs a login shell by default for each new terminal window, calling
+# ~/.bash_profile instead of .bashrc.
+#
+# Most of the time you don't want to maintain two separate config files for
+# login and non-login shells when you set a PATH, you want it to apply to
+# both. You can fix this by sourcing ~/.bashrc from your .bash_profile file,
+# then putting PATH and common settings in .bashrc.
+#
+
+#
+# History option.
 #
 
 # Info: searching previous commands in bash.
@@ -18,10 +42,15 @@ export HISTSIZE=100000
 export HISTFILESIZE=100000
 
 # Don't put duplicate lines in the history.
-export HISTCONTROL=ignoredups
+#export HISTCONTROL=erasedups
+
+shopt -s histappend
+export HISTIGNORE='&:ls:cd ~:cd ..:[bf]g:exit:h:history'
+# Erase duplicates across the whole history
+export HISTCONTROL=erasedups
 
 # Ignore same sucessive entries.
-export HISTCONTROL=ignoreboth
+#export HISTCONTROL=ignoreboth
 
 # Check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.

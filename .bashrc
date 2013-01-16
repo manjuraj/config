@@ -45,7 +45,7 @@ export HISTFILESIZE=100000
 #export HISTCONTROL=erasedups
 
 shopt -s histappend
-export HISTIGNORE='&:ls:cd ~:cd ..:[bf]g:exit:h:history'
+export HISTIGNORE="&:ls:[bf]g:exit:pwd:clear:mount:umount:vim:[ \t]*"
 # Erase duplicates across the whole history
 export HISTCONTROL=erasedups
 

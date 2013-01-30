@@ -1,0 +1,28 @@
+# C
+# Compiled object files
+*.lo
+*.o
+# Compiled dynamic libraries
+*.so
+*.la
+*.a
+# Compiled misc
+*.dep
+*.gcda
+*.gcno
+*.gcov
+# Core dump
+core*
+
+# Temporary
+*.swp
+*~
+
+# Java
+*.iml
+.idea
+*/target/
+
+# Packages
+*.tar.gz
+*.tar.bz2

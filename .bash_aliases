@@ -20,6 +20,8 @@ alias lh='ls -lah'
 
 # Change directory
 alias cdt='cd ~/workspace'
+alias cdg='cd ~/"Google Drive"'
+alias cdd='cd ~/Dropbox'
 
 # Human readable figures
 alias df='df -h'

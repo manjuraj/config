@@ -30,6 +30,9 @@ alias p4d='p5 diff ...'
 # Maven
 export MAVEN_OPTS=-Xmx1024m
 
+# Java
+export JAVA_HOME=`/usr/libexec/java_home`
+
 # Cscope + vim
 if [ -f ~/.mscope/.mscoperc ]; then
     . ~/.mscope/.mscoperc

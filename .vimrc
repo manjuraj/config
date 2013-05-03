@@ -2,7 +2,7 @@
 "
 " @author: Manju
 " @email: manj@cs.stanford.edu
-" @lastedited: 10/17/2011
+" @lastedited: 05/1032013
 "
 " .vimrc
 "  `- General
@@ -383,7 +383,9 @@ set showmatch
 " :s/a.\{-}//                   " modified 'abcdef' to 'bcdef' (non-greedy matching)
 " :s/a.*//                      " modified 'abcdef' to '' (greedy matching)
 "
-" <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+" windo - operate on all windows
+" :windo 2s/\(.*\)/This is a new line.\r/  " adds 'This is a new line.' at line 2 of every file
+"
 " OMNI COMPLETION
 " ---------------
 "

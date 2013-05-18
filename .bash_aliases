@@ -99,4 +99,3 @@ alias hdp='hexdump -v -e '"'"' "%07.7_ax  " 16/1 "%_p" " " 16/1 "%_p" "  " 16/1 
 
 # Misc
 alias sbash='source ~/.bashrc'
-alias vm='ssh manj@ubuntu'

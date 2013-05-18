@@ -4,8 +4,11 @@
 #
 
 # Set PATH
-PATH=$HOME/bin:$PATH
+PATH=$HOME/bin:/usr/local/bin:/Users/manju/workspace/play-2.1.1:$PATH
 export PATH
+
+# Sublime setup
+# ln -s /Applications/Sublime\ Text\ 2.app/Contents/SharedSupport/bin/subl /usr/local/bin/subl
 
 # Current tree (workspace)
 export MTREE=~/workspace
@@ -52,3 +55,6 @@ export LD_LIBRARY_PATH=/usr/local/lib
 
 # Python
 export PYTHONSTARTUP=$HOME/.pythonrc
+
+# Virtual Machines
+export ub64='192.168.239.132'

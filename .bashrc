@@ -2,7 +2,7 @@
 #
 # @author: Manju.
 # @email: manj@cs.stanford.edu
-# @lastedited: 01/05/2013
+# @lastedited: 05/20/2013
 
 # ~/.bashrc versus ~/.bash_profile
 
@@ -38,19 +38,22 @@
 #    of the command just keep hitting CTRL R.
 
 # Save more commands.
-export HISTSIZE=100000
-export HISTFILESIZE=100000
+export HISTSIZE=1000000
+export HISTFILESIZE=1000000
 
 # Don't put duplicate lines in the history.
 #export HISTCONTROL=erasedups
 
 shopt -s histappend
-export HISTIGNORE="&:ls:[bf]g:exit:pwd:clear:mount:umount:vim:[ \t]*"
+export HISTIGNORE="&:ls:[bf]g:exit:pwd:clear:mount:umount:vi[m]:[ \t]*"
 # Erase duplicates across the whole history
-export HISTCONTROL=erasedups
-
+# Don't put duplicate lines in the history
 # Ignore same sucessive entries.
-#export HISTCONTROL=ignoreboth
+# Ignore commands that start with space
+export HISTCONTROL=erasedups:ignoredups:ignoreboth:ignorespace
+
+# Record the timestamp of each command in its history
+# export HISTTIMEFORMAT='%F %T '
 
 # Check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.

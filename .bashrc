@@ -2,7 +2,7 @@
 #
 # @author: Manju.
 # @email: manj@cs.stanford.edu
-# @lastedited: 05/20/2013
+# @lastedited: 05/31/2013
 
 # ~/.bashrc versus ~/.bash_profile
 
@@ -45,7 +45,7 @@ export HISTFILESIZE=1000000
 #export HISTCONTROL=erasedups
 
 shopt -s histappend
-export HISTIGNORE="&:ls:[bf]g:exit:pwd:clear:mount:umount:vi[m]:[ \t]*"
+export HISTIGNORE="ls:[bf]g:exit:pwd:clear:mount:umount:vi[m]:history:[ ]*"
 # Erase duplicates across the whole history
 # Don't put duplicate lines in the history
 # Ignore same sucessive entries.

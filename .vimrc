@@ -2,7 +2,7 @@
 "
 " @author: Manju
 " @email: manj@cs.stanford.edu
-" @lastedited: 05/1032013
+" @lastedited: 06/28/2013
 "
 " .vimrc
 "  `- General
@@ -369,7 +369,8 @@ set showmatch
 "
 " Examples
 " :%s/\s\+$//                   " trim blanks and spaces at the end of every line
-" :%s/^[\ \t]*\n$//g            " remove empty lines
+" :%s/\n//g                     " remove newline
+" :%s/^\s*\n//g                 " remove empty lines
 " :%s/\(\n\n\)\n\+/\1/          " replace multiple blank lines with a single blank line
 " :.,12s/foo/bar                " replace foo to bar from current line to line number 12
 " :.,+12s/foo/bar               " replace foo to bar from current to 12 lines ahead

@@ -21,6 +21,19 @@
 .project
 .settings/
 
+# playframework
+db
+lib
+logs
+modules
+precompiled
+project/project
+project/target
+target
+tmp
+test-result
+server.pid
+
 # C
 # compiled object files
 *.lo
@@ -41,6 +54,8 @@ core*
 # temporary
 *.swp
 *~
+*.bak
+*.orig
 
 # packages
 *.tar.gz

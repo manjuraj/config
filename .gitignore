@@ -1,28 +1,47 @@
+.*
+!.gitignore
+
+# java
+
+*.class
+*.jar
+*.war
+*.ear
+
+# intellij
+
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# eclipse
+
+.classpath
+.project
+.settings/
+
 # C
-# Compiled object files
+# compiled object files
 *.lo
 *.o
-# Compiled dynamic libraries
+# compiled dynamic libraries
 *.so
 *.la
 *.a
-# Compiled misc
+# compiled misc
 *.dep
 *.gcda
 *.gcno
 *.gcov
-# Core dump
+
+# core dump
 core*
 
-# Temporary
+# temporary
 *.swp
 *~
 
-# Java
-*.iml
-.idea
-*/target/
-
-# Packages
+# packages
 *.tar.gz
 *.tar.bz2

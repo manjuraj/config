@@ -22,7 +22,6 @@
 .settings/
 
 # playframework
-db
 lib
 logs
 modules

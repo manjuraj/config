@@ -1,8 +1,8 @@
 " ~/.vimrc - vim startup file
 "
-" @author: Manju
+" @author: Manju Rajashekhar
 " @email: manj@cs.stanford.edu
-" @lastedited: 06/28/2013
+" @lastedited: 01/19/2014
 "
 " .vimrc
 "  `- General
@@ -572,3 +572,5 @@ autocmd BufWinLeave * call clearmatches()
 " use "*yG to yank everything in file -- use double-quote asterix before any yank command
 " use "*p to paste in vim
 set clipboard=unnamed
+
+execute pathogen#infect()

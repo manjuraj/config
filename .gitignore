@@ -21,7 +21,12 @@
 .project
 .settings/
 
+# sbt
+
+target/
+
 # playframework
+
 lib
 logs
 modules

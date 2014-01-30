@@ -48,6 +48,7 @@ fi
 # Custom Aliases
 alias cdt='cd ${MTREE}'
 alias cdn='cd ${HOME}/"Google Drive"/notes'
+alias cds='cd ${HOME}/"Google Drive"/study'
 
 # Lib
 export LD_LIBRARY_PATH=/usr/local/lib

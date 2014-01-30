@@ -4,7 +4,7 @@
 #
 
 # Set PATH
-PATH=$HOME/bin:/usr/local/bin:/Users/manju/workspace/play-2.1.1:$PATH
+PATH=$HOME/workspace/bin:/usr/local/bin:$HOME/workspace/play-2.2.1:$HOME/workspace/activator-1.0.10:$PATH
 export PATH
 
 # Sublime setup
@@ -12,7 +12,6 @@ export PATH
 
 # Current tree (workspace)
 export MTREE=~/workspace
-export NOTES=$HOME/Dropbox/notes
 
 # Local functions
 
@@ -48,7 +47,7 @@ fi
 
 # Custom Aliases
 alias cdt='cd ${MTREE}'
-alias cdn='cd ${NOTES}'
+alias cdn='cd ${HOME}/"Google Drive"/notes'
 
 # Lib
 export LD_LIBRARY_PATH=/usr/local/lib

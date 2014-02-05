@@ -36,7 +36,6 @@ project/target
 target
 tmp
 test-result
-server.pid
 
 # C
 # compiled object files
@@ -60,6 +59,7 @@ core*
 *~
 *.bak
 *.orig
+*.pid
 
 # packages
 *.tar.gz

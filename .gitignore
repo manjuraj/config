@@ -25,6 +25,10 @@
 
 target/
 
+# finatra
+
+logs
+
 # playframework
 
 lib
@@ -51,6 +55,8 @@ test-result
 *.gcno
 *.gcov
 
+# Python
+*.pyc
 # core dump
 core*
 
@@ -60,7 +66,12 @@ core*
 *.bak
 *.orig
 *.pid
+*.DS_Store
+RUNNING_PID
+classpath.txt
 
 # packages
 *.tar.gz
 *.tar.bz2
+*.zip
+*.bz2

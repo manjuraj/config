@@ -2,7 +2,7 @@
 "
 " @author: Manju Rajashekhar
 " @email: manj@cs.stanford.edu
-" @lastedited: 01/19/2014
+" @lastedited: 04/03/2014
 "
 " .vimrc
 "  `- General
@@ -161,7 +161,26 @@ set t_vb=
 "   of block
 " <C-v> >
 " - visual block shift
-
+"
+" Pull all scala files in the entire source tree
+":args **/*.scala
+" - ** means recursively go down 30 directories (by default)
+" - :help **
+"
+":argdo exe "normal gg=G" | w
+" - :argdo tells it to run the specified command on all "args", or all open files
+" - exe tells it to execute the given command
+" - normal runs the :normal command, which allows you to execute normal mode commands like motions, etc
+" - gg goes to the top of the file
+" - = formats the file (= is the 'equalprg'
+" - G goes to the end of the file
+" - | chains commands together
+" - w writes the file
+"
+":argdo %s/<matchon>/<replacewith>/ge | w
+" - :argdo is to run a search and replace across many files
+"
+"
 " READ, WRITE, APPEND, COMPILE
 " ----------------------------
 "
@@ -496,35 +515,6 @@ let Tlist_Enable_Fold_Column = 1
 "  from the command is read. So you will never see the file that contains the
 "  output of exuberant ctags.
 "
-
-" PLUGIN = NERDTree
-" -----------------
-nnoremap <silent> <F2> :NERDTreeToggle<CR>
-
-"misc
-"pull all scala files in the entire source tree
-":args **/*.scala
-"** means recursively go down 30 directories (by default)
-":help **
-":argdo exe "normal gg=G" | w
-"
-"o break this down:
-":argdo tells it to run the specified command on all "args", or all open files
-"exe tells it to execute the given command
-"normal runs the :normal command, which allows you to execute normal mode commands like motions, etc
-"gg goes to the top of the file, = formats the file (= is the 'equalprg', G goes to the end of the file
-"| chains commands together
-"w writes the file
-"
-":argdo %s/matchon/replacewith/ge | w
-" :argdo is to run a search and replace across many files. Open the files you want either with the :args command or from the command line. Then do:
-
-"tip - Ctrl [ = ESC (i.e. you can exit insert mode to command mode) using Ctrl [ == cool
-
-"TODO
-"http://www.oualline.com/vim-cook.html#trim
-"let c_space_errors = 1
-
 highlight ExtraWhitespace ctermbg=red guibg=red
 match ExtraWhitespace /\s\+$/
 autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
@@ -548,6 +538,7 @@ autocmd BufWinLeave * call clearmatches()
 
 " VIM PLUGINS (VIM MACROS)
 " ------------------------
+set tags=tags;/
 
 " NO-TIME HACKS
 " -------------
@@ -555,11 +546,11 @@ autocmd BufWinLeave * call clearmatches()
 " ctags.vim - 'bar' at the bottom of my view window, showing the file-name,
 " row number, col number
 " Before sourcing the script do:
-    let g:ctags_path='/usr/local/bin/ctags'
-    let g:ctags_args='-I __declspec+'
+"    let g:ctags_path='/usr/local/bin/ctags'
+"    let g:ctags_args='-I __declspec+'
 "        (or whatever other additional arguments you want to pass to ctags)
-    let g:ctags_title=1		" To show tag name in title bar.
-    let g:ctags_statusline=1	" To show tag name in status line.
+"    let g:ctags_title=1		" To show tag name in title bar.
+"    let g:ctags_statusline=1	" To show tag name in status line.
 "    let generate_tags=1	" To start automatically when a supported
 "				" file is opened.
 ":set columns=79
@@ -568,9 +559,25 @@ autocmd BufWinLeave * call clearmatches()
 " autocmd BufWritePre *.scala :%s/\s+$//e
 
 " notes on using vim + clipboard
-" ensure that your vim is compiled with +clipboard
 " use "*yG to yank everything in file -- use double-quote asterix before any yank command
 " use "*p to paste in vim
 set clipboard=unnamed
 
+" scala
+autocmd FileType scala :setlocal sw=2 ts=2 sts=2
+
+" PATHOGEN
+" --------
 execute pathogen#infect()
+call pathogen#helptags()
+
+let g:NERDTreeDirArrows=0
+
+" CHECKLIST
+" ---------
+" ensure that your vim is compiled with +clipboard
+
+" REFERENCES
+" ----------
+" - http://www.oualline.com/vim-cook.html
+"

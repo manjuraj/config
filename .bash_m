@@ -4,7 +4,7 @@
 #
 
 # Set PATH
-PATH=$HOME/workspace/bin:/usr/local/bin:$HOME/workspace/play-2.2.1:$HOME/workspace/activator-1.0.10:$PATH
+PATH=$HOME/workspace/bin:$HOME/workspace/merlin-setup/scripts/:/usr/local/bin:$PATH
 export PATH
 
 # Sublime setup
@@ -55,6 +55,3 @@ export LD_LIBRARY_PATH=/usr/local/lib
 
 # Python
 export PYTHONSTARTUP=$HOME/.pythonrc
-
-# Virtual Machines
-export ub64='192.168.239.132'

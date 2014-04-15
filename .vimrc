@@ -2,7 +2,7 @@
 "
 " @author: Manju Rajashekhar
 " @email: manj@cs.stanford.edu
-" @lastedited: 04/03/2014
+" @lastedited: 04/13/2014
 "
 " .vimrc
 "  `- General
@@ -19,13 +19,22 @@
 "  `- Omni Completion
 "  `- User Interface
 "  `- Windows and Buffers
-"  `-
+"  `- Registers
+"  `- Key Mappings
 "
 " .vim/
 " `- Added syntax, filetype and indentation plugin for Scala
 " `- Added syntax, filetype and indentation plugin for GO
 " `- Changed syntax/go.vim to contain "set noexpandtab"
 "
+set nocompatible
+
+" PATHOGEN
+" --------
+" Use pathogen to easily modify the runtime path to include all
+" plugins under the ~/.vim/bundle directory
+execute pathogen#infect()
+call pathogen#helptags()
 
 " GENERAL
 " -------
@@ -57,11 +66,12 @@ set t_vb=
 " NOTES
 " -----
 "
+" Modes
+" - command
+" - insert
+"
 " Change the case of the character under the cursor
 " - use ~
-"
-" Swap two characters
-" - use key combination 'xp'
 "
 " To forbid any changes in the file use
 " vim -M <file-name>
@@ -69,8 +79,21 @@ set t_vb=
 " Open a file in read only mode
 " vim -R <file-name>
 "
+" Skip startup file
+" vim -u NONE <file-name>
+"
 " Count words aka 'wc'
 " - use g <C-g>
+"
+" Run a shell command
+" :!command
+"
+" Save the current file to under different name
+" :w <file-name>
+"
+" Append the current file to another file
+" :w >> <file-name>
+" :n,mw >> <file-name>
 "
 " vimtutor
 ":help tutor
@@ -180,22 +203,23 @@ set t_vb=
 ":argdo %s/<matchon>/<replacewith>/ge | w
 " - :argdo is to run a search and replace across many files
 "
-"
+
 " READ, WRITE, APPEND, COMPILE
 " ----------------------------
 "
 ":w <file-name>
 " - to write the contents of current file to <file-name>
 ":w >> <file-name>
-" - to append all the contents from the current file to <file-name>.
+" - to append all the contents from the current file to <file-name>
 "
 ":r <file-name>
 " - to read the contents of <file-name>
 ":r! <cmd>
-" - insert output of command <cmd> below the cursor.
-
+" - insert output of command <cmd> below the cursor
+"
 ":redir>f
 " - redirect the output to a file [assuming the file as a script]
+"
 
 " MOVING AROUND
 " -------------
@@ -204,12 +228,12 @@ set t_vb=
 " - gg, 1G  - start of file
 " - G       - end of file
 " - <num>G  - to the line <num> in file
-" - 50%     -  move halfway the file
+" - 50%     - move halfway the file
 "
 " Move to a specific section in the current window
-" - H   - home
-" - M   - middle
-" - L   - last
+" - H   - top of the screen (home)
+" - M   - middle of the screen
+" - L   - bottom of the screen (last)
 "
 " Where-am-i?
 " ctrl-g
@@ -243,14 +267,15 @@ set t_vb=
 " $        move the cursor to the end of the line
 " )        move the cursor forward to the next sentence
 " ( Move the cursor backward by a sentence
+"
 
 " MARKING/NAMED-MARKS
 " -------------------
 "
 " place a named mark
-" - m<{a-z}>
+" - m<{a-z}> or m<{A-Z}
 " jump to a named mark
-" - `{mark}, where {mark} is the mark letter.
+" - '{mark} or `{mark}, where {mark} is the mark letter.
 ":marks
 " - display active mark list
 
@@ -260,6 +285,14 @@ set t_vb=
 syntax on
 syntax enable
 colorscheme ron
+"
+":set list
+" enables visualizing of tabs, spaces and line ending
+":set listchars=tab:>.ddeol:$,extends:+,trail:= "$
+" - eol: the character to show end of the line
+" - tab: the characters use to show a tab. Two characters are used: the second
+"   will be repeated for each space
+" - trail: character to show for trailing spaces
 
 " FILETYPE
 " --------
@@ -293,7 +326,7 @@ set backupdir=~/tmp,/tmp
 "   not the first version
 "
 " set patchmode=.org
-" - to make vim keep the original file i.e the first backup file use...
+" - to make vim keep the original file i.e the first backup file used
 "
 
 " RECORD AND REPEAT
@@ -305,7 +338,7 @@ set backupdir=~/tmp,/tmp
 "
 " Note that mind that macros just record your keystrokes and play them back
 "
-" '.' command
+" '.' (dot) command
 " - repeat a previous change
 " - '.' command works for all changes you make, except for the 'u' (undo) and
 "   ctrl-r (redo) and commands that start with a colon (:)
@@ -313,6 +346,9 @@ set backupdir=~/tmp,/tmp
 
 " SEARCH
 " ------
+"
+" Search forward  /search
+" Search backward ?search
 "
 " Whole word search (under the cursor)
 " - * for forward search
@@ -338,6 +374,10 @@ set showmatch
 "
 " Examples
 " \(\(25\_[0-5]\|2\_[0-4]\_[0-9]\|\_[01]\?\_[0-9]\_[0-9]\?\)\.\)\{3\}\(25\_[0-5]\|2\_[0-4]\_[0-9]\|\_[01]\?\_[0-9]\_[0-9]\?\)   " match IP address
+"
+" fx - move the cursor the next occurrence of character x
+" Fx - move the cursor to the previous occurrence of character x
+"
 
 " REPLACE
 " -------
@@ -350,9 +390,12 @@ set showmatch
 " [range]
 "<empty> select current line
 " %      select all lines
+" .      select current line
+" $      select last line
 " M,N    select all lines from M to N
 " 0,N    select all lines from 0 to N
 " M,$    select all lines from M to last line
+" 'a     select line with mark 'a
 " 'a,'b  select all lines between marks 'a and 'b
 "
 " {pattern}
@@ -406,15 +449,17 @@ set showmatch
 " windo - operate on all windows
 " :windo 2s/\(.*\)/This is a new line.\r/  " adds 'This is a new line.' at line 2 of every file
 "
+
 " OMNI COMPLETION
 " ---------------
 "
 set ofu=syntaxcomplete#Complete
-"C-x C-l  line completion
-"C-x C-f  file completion
-"C-x C-o  omni completion
+"below keys trigger completion when in insert mode
 "C-n      word completion (forward)
 "C-p      word completion (backward)
+"C-x C-o  omni completion
+"C-x C-l  line completion
+"C-x C-f  file completion
 
 " USER INTERFACE
 " --------------
@@ -431,7 +476,7 @@ set laststatus=2  " always display status line
 set ruler
 "
 
-" WINDOWS and BUFFERS
+" WINDOWS AND BUFFERS
 " -------------------
 "
 " C-w n  Creates a new window above the current window
@@ -439,88 +484,24 @@ set ruler
 " C-w k  Moves the cursor to the window above the current one
 " C-w o  Make the current window the only window. Closes all other windows
 "
-" set winminheight=0
-" - allow windows to get fully squashed
-" nmap <silent> <C-j> <C-w>j<C-w>_
-" nmap <silent> <C-k> <C-w>k<C-w>_
-nmap <C-l> :buffers<CR>:buffer<Space>
 
-""<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-" QUICK FIX + GREP
-" ----------------
-" make quickfix window occpuy full width of bottom screen
-nmap <silent> <C-w>e :botright copen <CR>
-set grepprg=grep\ --color=always\ -nH\ $*\ /dev/null
-":copen  - open the quickfix window if it isn't there already
-":ccl    - close it
-":cn     - go to the next error in the window
-":cn <n> - go the error numbered <n> in the window
-":cnf    - go to the first error in the next file
+" REGISTERS
+" ---------
+"
+" Precede the command with "x, x is the one-character register name.
+"
 
 " KEY MAPPINGS
 " ------------
+"
 nmap <silent> <C-C> :nohlsearch<C-M>
-"nmap <silent> <C-b> :shell<C-M>
-nmap <silent> <F3> :set number! number? <CR>
+nmap <silent> <C-b> :shell<CR>
 
-" PLUGIN = taglist
-" ----------------
-"  plugin/taglist.vim
-"  doc/taglist.txt
-nmap <silent> <C-t> :TlistToggle<CR>
-"
-let Tlist_Use_Right_Window = 1
-" Place the taglist window on the right side.
-let Tlist_Compact_Format = 1
-" Remove extra information and blank lines from taglist window.
-let Tlist_Display_Tag_Scope = 1
-" Show scope of a tag (like a C++ class) next to the tag name.
-let Tlist_WinWidth = 30
-" Width of the vertically split taglist window.
-let Tlist_Auto_Update = 1
-" Automatically update the taglist to include newly edited files.
-let Tlist_Exit_OnlyWindow = 1
-" Close Vim if the taglist is the only window.
-let Tlist_Show_One_File = 1
-" Show tags for the current buffer only.
-let Tlist_Enable_Fold_Column = 1
-" Show the fold indicator column in the taglist window.
-"
-"Help
-"
-"Taglist window key list
-" <CR> Jump to the location where the tag under cursor is defined.
-" <SP> Display the prototype of the tag under the cursor.
-" o    Jump to the location where the tag under cursor is defined in a new
-"      window.
-" p    Display the tag definition in the file window and keep the cursor
-"      in the taglist window itself.
-" u    Update the tags listed in the taglist window
-" x    Zoom-in or Zoom-out the taglist window
-" +    Open a fold
-" zc   Open a fold
-" -    Close a fold
-" zo   Close a fold
-" *    Open all folds
-" =    Close all folds
-" [[   Jump to the beginning of the previous file
-" ]]   Jump to the beginning of the next file
-"
-"Notes
-"- The taglist plugin doesn't use a tags file stored in disk. For every opened
-"  file, the taglist plugin invokes the exuberant ctags utility to get the
-"  list of tags dynamically. The Vim system() function is used to invoke
-"  exuberant ctags and get the ctags output. This function internally uses a
-"  temporary file to store the output. This file is deleted after the output
-"  from the command is read. So you will never see the file that contains the
-"  output of exuberant ctags.
-"
-highlight ExtraWhitespace ctermbg=red guibg=red
-match ExtraWhitespace /\s\+$/
-autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
-autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
-autocmd InsertLeave * match ExtraWhitespace /\s\+$/
-autocmd BufWinLeave * call clearmatches()
+nmap <silent> <C-j> <C-w>j<C-w>
+nmap <silent> <C-k> <C-w>k<C-w>
+
+nmap <C-l> :buffers<CR>:buffer<Space>
+
 "
 " VIM COLORS
 " ----------
@@ -566,11 +547,6 @@ set clipboard=unnamed
 " scala
 autocmd FileType scala :setlocal sw=2 ts=2 sts=2
 
-" PATHOGEN
-" --------
-execute pathogen#infect()
-call pathogen#helptags()
-
 let g:NERDTreeDirArrows=0
 
 " CHECKLIST
@@ -580,4 +556,4 @@ let g:NERDTreeDirArrows=0
 " REFERENCES
 " ----------
 " - http://www.oualline.com/vim-cook.html
-"
+" - http://nvie.com/posts/how-i-boosted-my-vim/

@@ -43,6 +43,7 @@ call pathogen#helptags()
 set history=1000
 "
 " Turn on the file type plugin
+filetype on
 filetype plugin on
 filetype indent on
 "
@@ -454,7 +455,7 @@ set showmatch
 " ---------------
 "
 set ofu=syntaxcomplete#Complete
-"below keys trigger completion when in insert mode
+" Below keys trigger completion when in insert mode
 "C-n      word completion (forward)
 "C-p      word completion (backward)
 "C-x C-o  omni completion
@@ -464,17 +465,23 @@ set ofu=syntaxcomplete#Complete
 " USER INTERFACE
 " --------------
 "
-set tabstop=4
-set shiftwidth=4
+set tabstop=2
+set shiftwidth=2
 set expandtab
 set smarttab
 set autoindent
 set number
 set wrap
 set showcmd
-set laststatus=2  " always display status line
+"
+set laststatus=2
+" always display status line, even if there is one window
+"
 set ruler
 "
+set hidden 
+" Make sure that unsaved buffers that are to be put in the background are 
+" allowed to go in there (ie. the "must save first" error doesn't come up)
 
 " WINDOWS AND BUFFERS
 " -------------------
@@ -496,10 +503,8 @@ set ruler
 "
 nmap <silent> <C-C> :nohlsearch<C-M>
 nmap <silent> <C-b> :shell<CR>
-
 nmap <silent> <C-j> <C-w>j<C-w>
 nmap <silent> <C-k> <C-w>k<C-w>
-
 nmap <C-l> :buffers<CR>:buffer<Space>
 
 "
@@ -557,3 +562,4 @@ let g:NERDTreeDirArrows=0
 " ----------
 " - http://www.oualline.com/vim-cook.html
 " - http://nvie.com/posts/how-i-boosted-my-vim/
+"

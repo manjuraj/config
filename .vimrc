@@ -524,7 +524,7 @@ nmap <C-l> :buffers<CR>:buffer<Space>
 
 " VIM PLUGINS (VIM MACROS)
 " ------------------------
-set tags=tags;/
+set tags=.tags;/
 
 " NO-TIME HACKS
 " -------------
@@ -547,12 +547,19 @@ set tags=tags;/
 " notes on using vim + clipboard
 " use "*yG to yank everything in file -- use double-quote asterix before any yank command
 " use "*p to paste in vim
-set clipboard=unnamed
+" Add the unnamed register to the clipboard
+set clipboard+=unnamed
 
 " scala
 autocmd FileType scala :setlocal sw=2 ts=2 sts=2
 
+" PLUGINS
+" --------
+"
 let g:NERDTreeDirArrows=0
+"
+let g:vim_markdown_folding_disabled=1
+let g:vim_markdown_no_default_key_mappings=1
 
 " CHECKLIST
 " ---------

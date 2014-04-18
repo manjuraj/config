@@ -2,14 +2,19 @@
    name = Manju Rajashekhar
    email = manj@cs.stanford.edu
 [alias]
-   co = checkout
    st = status
+   br = branch
+   co = checkout
    ci = commit
+   df = diff
+   lg = log -p
     d = difftool
+
 [color]
    ui = auto
 [core]
    editor = vim
+   excludesfile = /Users/manju/.gitignore
 [push]
    default = current
 [diff]

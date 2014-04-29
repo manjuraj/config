@@ -559,7 +559,6 @@ autocmd FileType scala :setlocal sw=2 ts=2 sts=2
 let g:NERDTreeDirArrows=0
 "
 let g:vim_markdown_folding_disabled=1
-let g:vim_markdown_no_default_key_mappings=1
 
 " CHECKLIST
 " ---------

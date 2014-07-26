@@ -40,6 +40,7 @@ export GREP_OPTIONS='--color=auto'
 export GREP_COLOR='1;31'
 alias grepn='grep -n'
 alias gcat='grep -n ".*\"'
+alias ag='ag --color-match="1;31" --color-path="1;37"'
 
 # Maven 
 alias mvn='mvncolor'

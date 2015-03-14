@@ -2,7 +2,7 @@
 "
 " @author: Manju Rajashekhar
 " @email: manj@cs.stanford.edu
-" @lastedited: 04/13/2014
+" @lastedited: 03/13/2015
 "
 " .vimrc
 "  `- General
@@ -36,6 +36,30 @@ set nocompatible
 execute pathogen#infect()
 call pathogen#helptags()
 
+" PLUGINS
+" --------
+"
+"
+" vim-markdown
+let g:vim_markdown_folding_disabled=0
+let g:vim_markdown_initial_foldlevel=6
+let g:vim_markdown_no_default_key_mappings=1
+"set nofoldenable
+"
+" ctrl-p
+let g:ctrlp_working_path_mode = 'rw'
+" <c-d> inside to prompt to toggle searching by filename or full path
+let g:ctrlp_by_filename = 0
+" <c-r> inside to prompt to toggle searching by regexp
+let g:ctrlp_regexp = 1
+let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:12,results:12'
+
+set wildignore+=*/tmp/*,*/target/*,*.o,*.so,*.swp,*.zip,*.tar,*/.git/*,*/.hg/*,*/.svn/*
+let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
+nmap <silent> ,f :CtrlP<cr>
+nmap <silent> ,b :CtrlPBuffer<cr>
+nmap <silent> ,m :CtrlPMixed<cr>
+
 " GENERAL
 " -------
 "
@@ -43,9 +67,9 @@ call pathogen#helptags()
 set history=1000
 "
 " Turn on the file type plugin
-filetype on
-filetype plugin on
-filetype indent on
+"filetype on
+"filetype plugin on
+"filetype indent on
 "
 " When vimrc is edited, reload it
 autocmd! bufwritepost vimrc source ~/.vimrc
@@ -285,7 +309,8 @@ set t_vb=
 "
 syntax on
 syntax enable
-colorscheme ron
+set background=dark
+"colorscheme ron
 "
 ":set list
 " enables visualizing of tabs, spaces and line ending
@@ -358,7 +383,7 @@ set backupdir=~/tmp,/tmp
 " searching for whole words by delineating words using markers
 " - \< as start-of-word marker
 " - \> as end-of-word marker
-set ic
+"set ic
 " - set [no]ic for case (in)sensitive searches and replaces
 "
 set hlsearch
@@ -502,7 +527,7 @@ set hidden
 " ------------
 "
 nmap <silent> <C-C> :nohlsearch<C-M>
-nmap <silent> <C-b> :shell<CR>
+"nmap <silent> <C-b> :shell<CR>
 nmap <silent> <C-j> <C-w>j<C-w>
 nmap <silent> <C-k> <C-w>k<C-w>
 nmap <C-l> :buffers<CR>:buffer<Space>
@@ -544,28 +569,26 @@ set tags=.tags;/
 " **TWITTER
 " autocmd BufWritePre *.scala :%s/\s+$//e
 
-" notes on using vim + clipboard
-" use "*yG to yank everything in file -- use double-quote asterix before any yank command
+" VIM CLIPBOARD
+" ------------
+" requires vim to be compiled with +clipboard
+" use "*yG to yank everything in file - use double-quote asterix before any yank command
 " use "*p to paste in vim
-" Add the unnamed register to the clipboard
+"
+" add the unnamed register to the clipboard
 set clipboard+=unnamed
 
 " scala
 autocmd FileType scala :setlocal sw=2 ts=2 sts=2
 
-" PLUGINS
-" --------
-"
-let g:NERDTreeDirArrows=0
-"
-let g:vim_markdown_folding_disabled=1
-
 " CHECKLIST
 " ---------
-" ensure that your vim is compiled with +clipboard
 
 " REFERENCES
 " ----------
 " - http://www.oualline.com/vim-cook.html
 " - http://nvie.com/posts/how-i-boosted-my-vim/
 "
+if &diff
+    colorscheme monokai
+endif

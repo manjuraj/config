@@ -44,17 +44,17 @@ call pathogen#helptags()
 let g:vim_markdown_folding_disabled=0
 let g:vim_markdown_initial_foldlevel=6
 let g:vim_markdown_no_default_key_mappings=1
-"set nofoldenable
+set nofoldenable
 "
 " ctrl-p
-let g:ctrlp_working_path_mode = 'rw'
+let g:ctrlp_working_path_mode = 'ra'
 " <c-d> inside to prompt to toggle searching by filename or full path
 let g:ctrlp_by_filename = 0
 " <c-r> inside to prompt to toggle searching by regexp
 let g:ctrlp_regexp = 1
 let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:12,results:12'
 
-set wildignore+=*/tmp/*,*/target/*,*.o,*.so,*.swp,*.zip,*.tar,*/.git/*,*/.hg/*,*/.svn/*
+set wildignore+=*/tmp/*,*/target/*,*.o,*.so,*.class,*.swp,*.zip,*.tar,*/.git/*,*/.hg/*,*/.svn/*
 let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
 nmap <silent> ,f :CtrlP<cr>
 nmap <silent> ,b :CtrlPBuffer<cr>
@@ -581,6 +581,11 @@ set clipboard+=unnamed
 " scala
 autocmd FileType scala :setlocal sw=2 ts=2 sts=2
 
+" python
+autocmd FileType python :setlocal sw=4 ts=4 sts=4
+
+map Q :qa<CR>
+
 " CHECKLIST
 " ---------
 
@@ -592,3 +597,5 @@ autocmd FileType scala :setlocal sw=2 ts=2 sts=2
 if &diff
     colorscheme monokai
 endif
+
+autocmd BufNewFile,BufRead *.ont  set syntax=conf

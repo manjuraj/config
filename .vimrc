@@ -599,3 +599,4 @@ if &diff
 endif
 
 autocmd BufNewFile,BufRead *.ont  set syntax=conf
+autocmd BufNewFile,BufRead *.rules set syntax=json

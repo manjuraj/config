@@ -3,8 +3,13 @@
 # @author - manj@cs.stanford.edu
 #
 
+# Bash git prompt
+source ~/.bash-git-prompt/gitprompt.sh
+GIT_PROMPT_ONLY_IN_REPO=1
+GIT_PROMPT_THEME=Default
+
 # Set PATH
-PATH=$HOME/workspace/bin:$HOME/workspace/merlin-setup/scripts/:/usr/local/bin:$PATH
+PATH=$HOME/workspace/bin:$HOME/workspace/merlin-setup/scripts/:$HOME/.local/bin/:/usr/local/bin:$PATH
 export PATH
 
 # Sublime setup
@@ -46,9 +51,13 @@ if [ -f ~/.mtags/.mtagsrc ]; then
 fi
 
 # Custom Aliases
-alias cdt='cd ${MTREE}'
-alias cds='cd ${MTREE}/solr-4.7.1/example/solr'
+alias cdg='cd ${HOME}/"Google Drive"'
+alias cdd='cd ${HOME}/Dropbox'
+alias cdb='cd ${HOME}/"Box Sync"'
 alias cdn='cd ${HOME}/"Google Drive"/notes'
+alias cdt='cd ${MTREE}'
+alias cds='cd ${MTREE}/merlin/searcher'
+alias cda='cd ${MTREE}/merlin-setup/ansible'
 
 # Lib
 export LD_LIBRARY_PATH=/usr/local/lib

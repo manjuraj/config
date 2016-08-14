@@ -2,7 +2,7 @@
 "
 " @author: Manju Rajashekhar
 " @email: manj@cs.stanford.edu
-" @lastedited: 03/13/2015
+" @lastedited: 08/13/2016
 "
 " .vimrc
 "  `- General
@@ -33,43 +33,45 @@ set nocompatible
 " --------
 " Use pathogen to easily modify the runtime path to include all
 " plugins under the ~/.vim/bundle directory
+"
 execute pathogen#infect()
 call pathogen#helptags()
 
 " PLUGINS
 " --------
 "
-"
 " vim-markdown
+" cd ~/.vim/bundle && git clone git@github.com:plasticboy/vim-markdown.git
 let g:vim_markdown_folding_disabled=0
 let g:vim_markdown_initial_foldlevel=6
 let g:vim_markdown_no_default_key_mappings=1
 set nofoldenable
 "
 " ctrl-p
+" cd ~/.vim/bundle && git clone git@github.com:ctrlpvim/ctrlp.vim.git
 let g:ctrlp_working_path_mode = 'ra'
 " <c-d> inside to prompt to toggle searching by filename or full path
 let g:ctrlp_by_filename = 0
 " <c-r> inside to prompt to toggle searching by regexp
 let g:ctrlp_regexp = 1
 let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:12,results:12'
-
 set wildignore+=*/tmp/*,*/target/*,*.o,*.so,*.class,*.swp,*.zip,*.tar,*/.git/*,*/.hg/*,*/.svn/*
 let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
 nmap <silent> ,f :CtrlP<cr>
 nmap <silent> ,b :CtrlPBuffer<cr>
 nmap <silent> ,m :CtrlPMixed<cr>
+"
+" vim-scala
+" cd ~/.vim/bundle && git clone git@github.com:derekwyatt/vim-scala.git
+"
+" cd ~/.vim/bundle && git clone git@github.com:flazz/vim-colorschemes.git
+"
 
 " GENERAL
 " -------
 "
 " Sets how many lines of history VIM has to remember
-set history=1000
-"
-" Turn on the file type plugin
-"filetype on
-"filetype plugin on
-"filetype indent on
+set history=8196
 "
 " When vimrc is edited, reload it
 autocmd! bufwritepost vimrc source ~/.vimrc
@@ -106,9 +108,6 @@ set t_vb=
 "
 " Skip startup file
 " vim -u NONE <file-name>
-"
-" Count words aka 'wc'
-" - use g <C-g>
 "
 " Run a shell command
 " :!command
@@ -297,12 +296,12 @@ set t_vb=
 " MARKING/NAMED-MARKS
 " -------------------
 "
-" place a named mark
+" Place a named mark
 " - m<{a-z}> or m<{A-Z}
-" jump to a named mark
+" Jump to a named mark
 " - '{mark} or `{mark}, where {mark} is the mark letter.
 ":marks
-" - display active mark list
+" - Display active mark list
 
 " LOOK AND FEEL
 " -------------
@@ -313,7 +312,7 @@ set background=dark
 "colorscheme ron
 "
 ":set list
-" enables visualizing of tabs, spaces and line ending
+" Enables visualizing of tabs, spaces and line ending
 ":set listchars=tab:>.ddeol:$,extends:+,trail:= "$
 " - eol: the character to show end of the line
 " - tab: the characters use to show a tab. Two characters are used: the second
@@ -323,15 +322,15 @@ set background=dark
 " FILETYPE
 " --------
 "
-" enable filetype detection; detects the type of the file by checking
+" Enable filetype detection; detects the type of the file by checking
 " the filename and sometimes the contents of the file for specific
 " text
 filetype on
 "
-" turn on the file type plugin
+" Turn on the file type plugin
 filetype plugin on
 "
-" use this if you have started with an empty file and typed text that
+" Use this if you have started with an empty file and typed text that
 " makes it possible to detect the type of text
 filetype detect
 
@@ -340,32 +339,32 @@ filetype detect
 "
 set backup
 set backupext=~
-" - the name of the backup file is the original file with ~ added to the
+" - The name of the backup file is the original file with ~ added to the
 "   end. If your file is data.txt, then backup file is data.txt~
 "
 set backupdir=~/tmp,/tmp
-" - list of directories for the backup file
-" - backup file will be created in the first directory in the list when it
+" - List of directories for the backup file
+" - Backup file will be created in the first directory in the list when it
 "   is possible
-" - backup files are written each time ur original source file is written;
+" - Backup files are written each time your original source file is written;
 "   thus a backup file will only contain the previous version of the file
 "   not the first version
 "
 " set patchmode=.org
-" - to make vim keep the original file i.e the first backup file used
+" - To make vim keep the original file i.e the first backup file used
 "
 
 " RECORD AND REPEAT
 " -----------------
 "
-" start recording - q{0-9a-zA-Z}
-" stop recording  - q
-" repeat          - [count] @{0-9a-z".=*}
+" Start recording - q{0-9a-zA-Z}
+" Stop recording  - q
+" Repeat          - [count] @{0-9a-z".=*}
 "
-" Note that mind that macros just record your keystrokes and play them back
+" Note that macros just record your keystrokes and play them back
 "
 " '.' (dot) command
-" - repeat a previous change
+" - Repeat a previous change
 " - '.' command works for all changes you make, except for the 'u' (undo) and
 "   ctrl-r (redo) and commands that start with a colon (:)
 "
@@ -380,23 +379,23 @@ set backupdir=~/tmp,/tmp
 " - * for forward search
 " - # for backward search
 "
-" searching for whole words by delineating words using markers
+" Searching for whole words by delineating words using markers
 " - \< as start-of-word marker
 " - \> as end-of-word marker
 "set ic
-" - set [no]ic for case (in)sensitive searches and replaces
+" - Set [no]ic for case (in)sensitive searches and replaces
 "
 set hlsearch
-" - set [no]hlsearch, for highlighting matches
+" - Set [no]hlsearch, for highlighting matches
 "
 set incsearch
-" - set [no]incsearch, for incremental searches
+" - Set [no]incsearch, for incremental searches
 "
 " set nowrapscan
-" - enable search to wrap around the end of the file
+" - Enable search to wrap around the end of the file
 "
 set showmatch
-" - when a bracket is inserted, briefly jump to the matching one
+" - When a bracket is inserted, briefly jump to the matching one
 "
 " Examples
 " \(\(25\_[0-5]\|2\_[0-4]\_[0-9]\|\_[01]\?\_[0-9]\_[0-9]\?\)\.\)\{3\}\(25\_[0-5]\|2\_[0-4]\_[0-9]\|\_[01]\?\_[0-9]\_[0-9]\?\)   " match IP address
@@ -408,6 +407,7 @@ set showmatch
 " REPLACE
 " -------
 " http://vim.wikia.com/wiki/Search_and_replace
+" http://vimregex.com/
 " help :s
 "
 " Text substitution
@@ -427,19 +427,59 @@ set showmatch
 " {pattern}
 " \<{word}\>        select whole word
 " \(word1\|word2\)  select word1 or word2
+"
+" Metacharacters
+" .                 matches any character except new line
+" \s                matches whitespace character
+" \S                matches non-whitespace character
+" \d                matches digit
+" \D                matches non-digit
+" \x                matches hex digit
+" \X                matches non-hex digit
+" \o                matches octal digit
+" \O                matches non-octal digit
+" \h                matches head of word character (a,b,c...z,A,B,C...Z and _)
+" \H                matches non-head of word character
+" \p                matches printable character
+" \P                matches like \p, but excluding digits
+" \w                matches word character
+" \W                matches non-word character
+" \a                matches alphabetic character
+" \A                matches non-alphabetic character
+" \l                matches lowercase character
+" \L                matches non-lowercase character
+" \u                matches uppercase character
+" \U                matches non-uppercase character
+"
+" Quantifiers
 " .*                matches everything (greedy matching)
 " .\{-}             matches everything (non-greedy matching)
 "
+" *                 matches 0 or more of the preceding characters, ranges or metacharacters
+"                   .* matches everything including empty line
+" \+                matches 1 or more of the preceding characters
+" \=                matches 0 or 1 more of the preceding characters
+" \{n,m}            matches from n to m of the preceding characters
+" \{n}              matches exactly n times of the preceding characters
+" \{,m}             matches at most m (from 0 to m) of the preceding characters
+" \{n,}             matches at least n of of the preceding characters
+"
+" \{-}              matches 0 or more of the preceding atom, as few as possible (non-greedy)
+" \{-n,m}           matches 1 or more of the preceding characters
+" \{-n,}            matches at lease or more of the preceding characters
+" \{-,m}            matches 1 or more of the preceding characters
+"
+" Grouping and Backreferences
 " {string}
-" &     replace with the whole matched pattern
-" \0    replace with the whole matched pattern
+" &   replace with the whole matched pattern
+" \0  replace with the whole matched pattern
 " \1	replace with the matched pattern in the first pair of ()
 " \2	replace with the matched pattern in the second pair of ()
 " ..
 " \r	carriage return (^M) = <CR> = / C-v <Enter>
-" \n    new line
+" \n  new line
 " \t	tab
-" \s    white space = [\ \t]
+" \s  white space = [\ \t]
 "
 " [flags]
 " [c] Confim each substitution
@@ -453,7 +493,7 @@ set showmatch
 " % is a synonymous with :1,$ (all lines)
 "
 " Visual substitution
-" - in visual mode enter ':' = :'<,'>s/{pattern}/{string}
+" - In visual mode enter ':' = :'<,'>s/{pattern}/{string}
 "
 " Examples
 " :%s/\s\+$//                   " trim blanks and spaces at the end of every line
@@ -475,7 +515,6 @@ set showmatch
 " windo - operate on all windows
 " :windo 2s/\(.*\)/This is a new line.\r/  " adds 'This is a new line.' at line 2 of every file
 "
-
 " OMNI COMPLETION
 " ---------------
 "
@@ -504,8 +543,8 @@ set laststatus=2
 "
 set ruler
 "
-set hidden 
-" Make sure that unsaved buffers that are to be put in the background are 
+set hidden
+" Make sure that unsaved buffers that are to be put in the background are
 " allowed to go in there (ie. the "must save first" error doesn't come up)
 
 " WINDOWS AND BUFFERS

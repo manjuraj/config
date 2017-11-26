@@ -9,7 +9,7 @@ GIT_PROMPT_ONLY_IN_REPO=1
 GIT_PROMPT_THEME=Default
 
 # Set PATH
-PATH=$HOME/workspace/bin:$HOME/workspace/merlin-setup/scripts/:$HOME/.local/bin/:/usr/local/bin:$PATH
+PATH=$HOME/workspace/bin:$HOME/.local/bin:/usr/local/bin:/usr/local/opt/python/libexec/bin:$PATH
 export PATH
 
 # Sublime setup

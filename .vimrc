@@ -66,6 +66,15 @@ nmap <silent> ,m :CtrlPMixed<cr>
 "
 " cd ~/.vim/bundle && git clone git@github.com:flazz/vim-colorschemes.git
 "
+" neocomplete
+" cd ~/.vim/bundle && git clone git@github.com:Shougo/neocomplete.vim.git
+let g:neocomplete#enable_at_startup = 1
+let g:neocomplete#enable_smart_case = 1
+let g:neocomplete#enable_auto_select = 0
+let g:neocomplete#sources#syntax#min_keyword_length = 3
+let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
+"
+inoremap <expr> <TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 
 " GENERAL
 " -------
@@ -511,10 +520,9 @@ set showmatch
 " :s/\w\+/\u\0/g                " modifies 'bla bla' to 'Bla Bla'
 " :s/a.\{-}//                   " modified 'abcdef' to 'bcdef' (non-greedy matching)
 " :s/a.*//                      " modified 'abcdef' to '' (greedy matching)
+" :windo 2s/\(.*\)/XYZ.\r/      " 'windo' operates on all windows and adds 'XYZ.' at line 2 of every file
 "
-" windo - operate on all windows
-" :windo 2s/\(.*\)/This is a new line.\r/  " adds 'This is a new line.' at line 2 of every file
-"
+
 " OMNI COMPLETION
 " ---------------
 "
@@ -564,9 +572,11 @@ set hidden
 
 " KEY MAPPINGS
 " ------------
+" - n  Normal mode map. Defined using ':nmap' or ':nnoremap'.
+" - i  Insert mode map. Defined using ':imap' or ':inoremap'.
+" :help map-modes
 "
 nmap <silent> <C-C> :nohlsearch<C-M>
-"nmap <silent> <C-b> :shell<CR>
 nmap <silent> <C-j> <C-w>j<C-w>
 nmap <silent> <C-k> <C-w>k<C-w>
 nmap <C-l> :buffers<CR>:buffer<Space>
@@ -632,7 +642,7 @@ map Q :qa<CR>
 " ----------
 " - http://www.oualline.com/vim-cook.html
 " - http://nvie.com/posts/how-i-boosted-my-vim/
-"
+" - http://learnvimscriptthehardway.stevelosh.com/
 if &diff
     colorscheme monokai
 endif

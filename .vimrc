@@ -2,7 +2,7 @@
 "
 " @author: Manju Rajashekhar
 " @email: manj@cs.stanford.edu
-" @lastedited: 08/13/2016
+" @lastedited: 09/10/2018
 "
 " .vimrc
 "  `- General
@@ -49,14 +49,14 @@ set nofoldenable
 "
 " ctrl-p
 " cd ~/.vim/bundle && git clone git@github.com:ctrlpvim/ctrlp.vim.git
-let g:ctrlp_working_path_mode = 'ra'
+let g:ctrlp_working_path_mode = 'w'
 " <c-d> inside to prompt to toggle searching by filename or full path
 let g:ctrlp_by_filename = 0
 " <c-r> inside to prompt to toggle searching by regexp
 let g:ctrlp_regexp = 1
 let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:12,results:12'
-set wildignore+=*/tmp/*,*/target/*,*.o,*.so,*.class,*.swp,*.zip,*.tar,*/.git/*,*/.hg/*,*/.svn/*
-let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
+"set wildignore+=*/tmp/*,*/target/*,*.o,*.so,*.class,*.swp,*.zip,*.tar,*/.git/*,*/.hg/*,*/.svn/*
+set wildignore+=*.o,*.so,*.class,*.swp,*.zip,*.tar,*/.git/*,*/.hg/*,*/.svn/*,*/target/*
 nmap <silent> ,f :CtrlP<cr>
 nmap <silent> ,b :CtrlPBuffer<cr>
 nmap <silent> ,m :CtrlPMixed<cr>
@@ -64,6 +64,7 @@ nmap <silent> ,m :CtrlPMixed<cr>
 " vim-scala
 " cd ~/.vim/bundle && git clone git@github.com:derekwyatt/vim-scala.git
 "
+" vim-colorschemes
 " cd ~/.vim/bundle && git clone git@github.com:flazz/vim-colorschemes.git
 "
 " neocomplete
@@ -520,7 +521,8 @@ set showmatch
 " :s/\w\+/\u\0/g                " modifies 'bla bla' to 'Bla Bla'
 " :s/a.\{-}//                   " modified 'abcdef' to 'bcdef' (non-greedy matching)
 " :s/a.*//                      " modified 'abcdef' to '' (greedy matching)
-" :windo 2s/\(.*\)/XYZ.\r/      " 'windo' operates on all windows and adds 'XYZ.' at line 2 of every file
+" windo - operate on all windows
+" :windo 2s/\(.*\)/This is a new line.\r/  " adds 'This is a new line.' at line 2 of every file
 "
 
 " OMNI COMPLETION
@@ -577,6 +579,7 @@ set hidden
 " :help map-modes
 "
 nmap <silent> <C-C> :nohlsearch<C-M>
+nmap <silent> <C-b> :shell<CR>
 nmap <silent> <C-j> <C-w>j<C-w>
 nmap <silent> <C-k> <C-w>k<C-w>
 nmap <C-l> :buffers<CR>:buffer<Space>
@@ -643,8 +646,9 @@ map Q :qa<CR>
 " - http://www.oualline.com/vim-cook.html
 " - http://nvie.com/posts/how-i-boosted-my-vim/
 " - http://learnvimscriptthehardway.stevelosh.com/
+"
 if &diff
-    colorscheme monokai
+  colorscheme monokai
 endif
 
 autocmd BufNewFile,BufRead *.ont  set syntax=conf

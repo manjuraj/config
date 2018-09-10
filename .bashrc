@@ -5,7 +5,7 @@
 # @lastedited: 05/31/2013
 
 # ~/.bashrc versus ~/.bash_profile
-
+#
 #
 # ~/.bash_profile is executed for login shells while ~/.bashrc is executed
 # for interactive non-login shells.
@@ -127,4 +127,4 @@ fi
 #
 # See /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
-
+#

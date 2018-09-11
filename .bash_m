@@ -1,6 +1,8 @@
 # . ~/.bash_m
 #
 # @author - manj@cs.stanford.edu
+# @email: manj@cs.stanford.edu
+# @lastedited: 09/10/2018
 #
 
 # Bash git prompt
@@ -8,29 +10,15 @@ source ~/.bash-git-prompt/gitprompt.sh
 GIT_PROMPT_ONLY_IN_REPO=1
 GIT_PROMPT_THEME=Default
 
+# GCP
+source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.bash.inc'
+source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.bash.inc'
+
 # Set PATH
-PATH=$HOME/workspace/bin:$HOME/.local/bin:/usr/local/bin:/usr/local/opt/python/libexec/bin:$PATH
+PATH="/usr/local/sbin:$PATH"
+PATH="/usr/local/bin:$PATH"
+PATH="$HOME/.local/bin:$PATH"
 export PATH
-
-# Sublime setup
-# ln -s /Applications/Sublime\ Text\ 2.app/Contents/SharedSupport/bin/subl /usr/local/bin/subl
-
-# Current tree (workspace)
-export MTREE=~/workspace
-
-# Local functions
-
-function mtree {
-    echo "Using tree = "$MTREE
-};
-
-# Perforce
-export P4CONFIG=.p4config
-export P4EDITOR=vim
-export EDITOR=vim
-export P4USER=manj
-alias p4o='p5 opened ...'
-alias p4d='p5 diff ...'
 
 # Git
 
@@ -45,22 +33,24 @@ if [ -f ~/.mscope/.mscoperc ]; then
     . ~/.mscope/.mscoperc
 fi
 
-# Ctags + vim
 if [ -f ~/.mtags/.mtagsrc ]; then
     . ~/.mtags/.mtagsrc
 fi
 
 # Custom Aliases
+alias cdw='cd ~/workspace'
+alias cdg='cd ~/"Google Drive"'
+alias cdd='cd ~/Dropbox'
 alias cdg='cd ${HOME}/"Google Drive"'
 alias cdd='cd ${HOME}/Dropbox'
 alias cdb='cd ${HOME}/"Box Sync"'
 alias cdn='cd ${HOME}/"Google Drive"/notes'
-alias cdt='cd ${MTREE}'
-alias cds='cd ${MTREE}/merlin/searcher'
-alias cda='cd ${MTREE}/merlin-setup/ansible'
+alias cdt='cd ${HOME}/development'
+alias cds='cd ${HOME}/development/Search'
 
 # Lib
 export LD_LIBRARY_PATH=/usr/local/lib
 
 # Python
 export PYTHONSTARTUP=$HOME/.pythonrc
+

@@ -1,4 +1,4 @@
-" vim: set tw=7 sw=2 ts=2 foldmethod=marker foldlevel=0 nomodeline:
+" vim: set foldmethod=marker foldlevel=0 nomodeline:
 " Minimal Settings {{{
 
 " Switch syntax highlighting on
@@ -16,9 +16,10 @@ unlet! skip_defaults_vim
 silent! source $VIMRUNTIME/defaults.vim
 
 augroup vimrc
-	autocmd!
+  autocmd!
 augroup END
 
+let s:darwin = has('mac')
 let mapleader = "\<Space>"
 let maplocalleader = "\<Space>"
 
@@ -46,6 +47,8 @@ Plug 'tpope/vim-commentary'
 Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
   let g:undotree_WindowLayout = 2
   nnoremap U :UndotreeToggle<CR>
+Plug 'machakann/vim-highlightedyank'
+  let g:highlightedyank_highlight_duration = 100
 
 " Fuzzy Finder (fzf)
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -63,6 +66,8 @@ Plug 'preservim/nerdtree', { 'on': 'NERDTreeToggle' }
       \| endif
   augroup END
   nnoremap <Leader>n :NERDTreeToggle<CR>
+Plug 'preservim/tagbar', { 'on': 'TagbarToggle' }
+  let g:tagbar_sort = 0
 
 " Git
 Plug 'tpope/vim-fugitive'
@@ -83,11 +88,15 @@ set tabstop=2
 set shiftwidth=2
 set expandtab smarttab
 
-" Indent
+" Indent, Wrap
 set autoindent
 set smartindent
 set wrap
 set whichwrap=b,s
+let &showbreak = '↳ '
+set breakindent
+set breakindentopt=sbr
+set formatoptions+=1,j
 
 set showcmd
 set ruler
@@ -103,7 +112,7 @@ set gdefault
 " No sound on errors
 set noerrorbells
 set novisualbell
-set t_vb=
+set vb t_vb=
 
 " Timeout settings
 " Ref: https://meta-serv.com/article/vim_delay
@@ -135,23 +144,48 @@ endif
 " Keep the cursor on the same column
 set nostartofline
 
-silent! colorscheme seoul256
+set autoread
 
 " Use ripgrep for grepping
 if executable('rg')
   set grepprg=rg\ --no-heading\ --vimgrep
-  set grepformat=%f:%l:%c:%m
+  set grepformat=%f:%l:%c:%m,%f:%l:%m
 endif
 
+" Command line completion
+set wildmenu
+set wildmode=full
+
 " Windows, Buffers, Tabs and Splits
+set scrolloff=5
 set hidden
 set splitbelow
 set splitright
 
-" Backup
+" Make the invisible visible
+set list
+set listchars=tab:\|\ ,
+
+" Backup and Temporary files
 set backup
-set backupext=~
-set backupdir=~/tmp,/tmp
+set backupdir=/tmp//,.
+set directory=/tmp//,.
+
+" Omni completion
+set completeopt=menuone,preview
+set complete-=i
+
+" Folds
+set foldlevelstart=99
+
+set virtualedit=block
+
+" Ctags
+set tags=./tags;/
+
+" Semi-persistent undo
+set undodir=/tmp,.
+set undofile
 
 " }}} 
 
@@ -171,9 +205,63 @@ let &statusline = s:statusline_expr()
 
 " }}}
 
+" Color Settings {{{
+
+let g:terminal_ansi_colors = [
+  \ '#4e4e4e', '#d68787', '#5f865f', '#d8af5f',
+  \ '#85add4', '#d7afaf', '#87afaf', '#d0d0d0',
+  \ '#626262', '#d75f87', '#87af87', '#ffd787',
+  \ '#add4fb', '#ffafaf', '#87d7d7', '#e4e4e4']
+
+if has('termguicolors')
+  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+  set termguicolors
+endif
+
+silent! colorscheme seoul256
+
+" }}}
+
 " Mappings {{{
 
 nnoremap ; :
+
+" Save
+inoremap <C-s>     <C-O>:update<cr>
+nnoremap <C-s>     :update<cr>
+nnoremap <leader>s :update<cr>
+nnoremap <leader>w :update<cr>
+
+" Quit
+inoremap <C-Q>     <esc>:q<cr>
+nnoremap <C-Q>     :q<cr>
+vnoremap <C-Q>     <esc>
+nnoremap <Leader>q :q<cr>
+nnoremap <Leader>Q :qa!<cr>
+
+" jk | Escaping!
+inoremap jk <Esc>
+
+" Scoll only by half a screen up or down
+noremap <C-F> <C-D>
+noremap <C-B> <C-U>
+
+" Movement in insert mode
+inoremap <C-h> <C-o>h
+inoremap <C-l> <C-o>a
+inoremap <C-j> <C-o>j
+inoremap <C-k> <C-o>k
+inoremap <C-^> <C-o><C-^>
+
+nnoremap <C-]> g<C-]>
+nnoremap g[ :pop<CR>
+
+" Make Y behave like other capitals
+nnoremap Y y$
+
+" qq to record, Q to replay
+nnoremap Q @q
 
 " Toggle between buffers (quickly)
 nnoremap <silent> <Leader><Leader> <C-^>
@@ -192,6 +280,14 @@ function! s:zoom()
   endif
 endfunction
 nnoremap <silent> <Leader>z :call <SID>zoom()<CR>
+
+" Disable CTRL-A on tmux or on screen
+if $TERM =~ 'screen'
+  nnoremap <C-a> <nop>
+  nnoremap <Leader><C-a> <C-a>
+endif
+
+" Tags
 
 " }}}
 

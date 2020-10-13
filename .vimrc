@@ -1,170 +1,82 @@
-" Manju Rajashekhar ~/.vimrc - vim startup file
-"
-" @author: Manju Rajashekhar
-" @email: manj@cs.stanford.edu
-" @lastedited: 07/07/2019
-"
-" .vimrc
-"  `- GENERAL
-"  `- PLUGINS
-"  `- KEY MAPPINGS
-"  `- SYNTAX
-"  `- COLORS
-"  `- OMNI COMPLETION
-"  `- USER INTERFACE
-"  `- WINDOWS, BUFFERS AND TABS
-"  `- PLUGIN SPECIFIC
-"
+" vim: set tw=7 sw=2 ts=2 foldmethod=marker foldlevel=0 nomodeline:
+" Minimal Settings {{{
 
-" GENERAL
-" -------
-set nocompatible
-set history=8196
-set encoding=utf-8
+" Switch syntax highlighting on
+syntax on
 
-" Timeout settings
-" Ref: https://meta-serv.com/article/vim_delay
-" Ref: https://vi.stackexchange.com/questions/15633/delayed-esc-from-insert-mode-caused-by-cursor-shape-terminal-sequence
-set notimeout
-set ttimeout
-set timeoutlen=2000
-set ttimeoutlen=30
+" Make backspace behave in a sane manner
+set backspace=indent,eol,start
 
-" No sound on errors
-set noerrorbells
-set novisualbell
-set t_vb=
+ " Enable file type detection and do language-dependent indenting
+filetype plugin indent on
+filetype detect
 
-" When compiled with +clipboard, use "* register as the clipboard; unnamed
-" option configures register "" to be the same as the "* register, while
-" autoselect option configures visually selected text to "* register.
-set clipboard+=unnamed,autoselect
+" Vim 8 defaults
+unlet! skip_defaults_vim
+silent! source $VIMRUNTIME/defaults.vim
 
-" Backup
-set backup
-set backupext=~
-set backupdir=~/tmp,/tmp
+augroup vimrc
+	autocmd!
+augroup END
 
-" Search
-set incsearch
-set ignorecase smartcase
-set gdefault
+let mapleader = "\<Space>"
+let maplocalleader = "\<Space>"
 
-" PLUGINS
-" -------
+" }}}
+
+" Vim Plug {{{
+
 " Ref: https://github.com/junegunn/vim-plug/wiki
-"
+
 if empty(glob('~/.vim/autoload/plug.vim'))
   silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
     \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
-"
+
 call plug#begin('~/.vim/plugged')
 
-" Enhancements
-Plug 'itchyny/lightline.vim'
-Plug 'machakann/vim-highlightedyank'
-" Plug 'andymass/vim-matchup'
-Plug 'tpope/vim-unimpaired'
-
-" Git
-Plug 'tpope/vim-fugitive'
+" Colors
+Plug 'joshdick/onedark.vim'
+Plug 'junegunn/seoul256.vim'
 
 " Edit
-Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
+Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-commentary'
-
-" Browsing
-Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
-augroup nerd_loader
-  autocmd!
-  autocmd VimEnter * silent! autocmd! FileExplorer
-  autocmd BufEnter,BufNew *
-    \  if isdirectory(expand('<amatch>'))
-    \|   call plug#load('nerdtree')
-    \|   execute 'autocmd! nerd_loader'
-    \| endif
-augroup END
+Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
+  let g:undotree_WindowLayout = 2
+  nnoremap U :UndotreeToggle<CR>
 
 " Fuzzy Finder (fzf)
-Plug 'airblade/vim-rooter'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 
-" Language Support
+" Browsing
+Plug 'preservim/nerdtree', { 'on': 'NERDTreeToggle' }
+  augroup nerd_loader
+    autocmd!
+    autocmd VimEnter * silent! autocmd! FileExplorer
+    autocmd BufEnter,BufNew *
+      \  if isdirectory(expand('<amatch>'))
+      \|   call plug#load('nerdtree')
+      \|   execute 'autocmd! nerd_loader'
+      \| endif
+  augroup END
+  nnoremap <Leader>n :NERDTreeToggle<CR>
 
-" Lsp
-Plug 'prabirshrestha/async.vim'
-Plug 'prabirshrestha/vim-lsp'
-
-" Lsp Asyncomplete
-Plug 'prabirshrestha/asyncomplete.vim'
-Plug 'prabirshrestha/asyncomplete-lsp.vim'
-
-" Rust
-Plug 'rust-lang/rust.vim'
-
-Plug 'junegunn/goyo.vim'
-
-" Colors
-Plug 'tomasr/molokai'
-Plug 'morhetz/gruvbox'
-Plug 'chriskempson/vim-tomorrow-theme'
-Plug 'yuttie/hydrangea-vim'
-Plug 'tyrannicaltoucan/vim-deep-space'
-Plug 'AlessandroYorba/Despacio'
-Plug 'cocopon/iceberg.vim'
-Plug 'w0ng/vim-hybrid'
-Plug 'nightsense/snow'
-Plug 'nightsense/stellarized'
-Plug 'arcticicestudio/nord-vim'
-Plug 'junegunn/seoul256.vim'
-Plug 'sjl/badwolf'
-Plug 'chriskempson/base16-vim'
+" Git
+Plug 'tpope/vim-fugitive'
+  nmap     <Leader>g :Gstatus<CR>gg<C-n>
+  nnoremap <Leader>d :Gdiff<CR>
 
 call plug#end()
 
-" KEY MAPPINGS
-" ------------
-let mapleader = "\<Space>"
-let maplocalleader = "\<Space>"
+" }}}
 
-nnoremap ; :
-nnoremap <leader>w :w<CR>
-nnoremap <leader>q :q<CR>
-nnoremap <leader>Q :qa!<CR>
+" Basic Settings {{{
 
-" SYNTAX
-" ------
-filetype plugin indent on
-filetype detect
-
-" COLORS
-" ------
-let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-set termguicolors
-
-set background=dark
-set t_Co=256  
-
-syntax on
-
-" Try: 
-" - base16-default-dark
-" - base16-twilight
-" - base16-eighties
-" - base16-tomorrow-night
-" - base16-tomorrow-night-eighties
-colorscheme base16-default-dark
-
-" OMNI COMPLETION
-" ---------------
-set completeopt=menuone,preview
-
-" USER INTERFACE
-" --------------
+set number
+set history=8196
 
 " Tabs 
 set tabstop=2
@@ -175,35 +87,102 @@ set expandtab smarttab
 set autoindent
 set smartindent
 set wrap
+set whichwrap=b,s
 
-set showcmd         " Show (partial) command in status line
-set ruler           " Where am I?
+set showcmd
+set ruler
 set laststatus=2
 set noshowmode
+
+" Search
+set ignorecase smartcase
+set incsearch
+set hlsearch
+set gdefault
+
+" No sound on errors
+set noerrorbells
+set novisualbell
+set t_vb=
+
+" Timeout settings
+" Ref: https://meta-serv.com/article/vim_delay
+" Ref: https://vi.stackexchange.com/questions/15633/delayed-esc-from-insert-mode-caused-by-cursor-shape-terminal-sequence
+set notimeout
+set ttimeout
+set timeoutlen=2000
+set ttimeoutlen=30
+
+set shortmess=aIT
+
+" When compiled with +clipboard, use "* register as the clipboard; unnamed
+" option configures register "" to be the same as the "* register, while
+" autoselect option configures visually selected text to "* register.
+set clipboard+=unnamed,autoselect
 
 set ttyfast
 set lazyredraw
 
-set mouse=a         " Enable mouse usage (all modes) in terminals
+" Mouse
+set mouse=a
 
-" Diff
-" Ref: https://vimways.org/2018/the-power-of-diff/
-set diffopt+=iwhite
-set diffopt+=algorithm:patience
-set diffopt+=indent-heuristic
+" 80 chars/line
+set textwidth=0
+if exists('&colorcolumn')
+  set colorcolumn=80
+endif
 
-" WINDOWS, BUFFERS AND TABS
-" -------------------------
+" Keep the cursor on the same column
+set nostartofline
+
+silent! colorscheme seoul256
+
+" Use ripgrep for grepping
+if executable('rg')
+  set grepprg=rg\ --no-heading\ --vimgrep
+  set grepformat=%f:%l:%c:%m
+endif
+
+" Windows, Buffers, Tabs and Splits
 set hidden
 set splitbelow
 set splitright
 
-" Circular window naviation
-nnoremap <S-tab> <C-w>w
-"tnoremap <S-tab> <C-w><C-w>
+" Backup
+set backup
+set backupext=~
+set backupdir=~/tmp,/tmp
 
-" Zoom 
-nnoremap <leader>z :call <SID>zoom()<CR>
+" }}} 
+
+" Status Line {{{
+
+function! s:statusline_expr()
+  let mod = "%{&modified ? '[+] ' : !&modifiable ? '[x] ' : ''}"
+  let ro  = "%{&readonly ? '[RO] ' : ''}"
+  let ft  = "%{len(&filetype) ? '['.&filetype.'] ' : ''}"
+  let fug = "%{exists('g:loaded_fugitive') ? fugitive#statusline() : ''}"
+  let sep = ' %= '
+  let pos = ' %-12(%l : %c%V%) '
+  let pct = ' %P'
+  return '[%n] %F %<'.mod.ro.ft.fug.sep.pos.'%*'.pct
+endfunction
+let &statusline = s:statusline_expr()
+
+" }}}
+
+" Mappings {{{
+
+nnoremap ; :
+
+" Toggle between buffers (quickly)
+nnoremap <silent> <Leader><Leader> <C-^>
+
+" Circular windows navigation
+nnoremap <Tab>   <C-W>w
+nnoremap <S-Tab> <C-W>W
+
+" Zoom
 function! s:zoom()
   if winnr('$') > 1
     tab split
@@ -212,92 +191,53 @@ function! s:zoom()
     tabclose
   endif
 endfunction
+nnoremap <silent> <Leader>z :call <SID>zoom()<CR>
 
-" Toggle between buffers (quickly)
-nnoremap <leader><leader> <C-^>
+" }}}
 
-" Buffer specific
-nnoremap <leader>c :bd<CR>
+" Fuzzy Finder (Fzf) & Rip Grep (rg) {{{
 
-" Reload .vimrc
-nnoremap <leader>x :source $MYVIMRC <bar> redraw <CR>
+let $FZF_DEFAULT_OPTS .= ' --inline-info'
+let $FZF_DEFAULT_COMMAND = 'rg --files --follow'
 
-" Terminal
-nnoremap <leader>t :terminal ++rows=10<CR><C-\><C-n><CR>
-" tnoremap <C-[> <C-w>N<CR>
+" Terminal buffer options for fzf
+autocmd! FileType fzf
+autocmd  FileType fzf set noshowmode noruler nonumber
 
-" PLUGIN SPECIFIC
-" ---------------
+let g:fzf_colors = { 
+	\ 'fg':      ['fg', 'Normal'],
+  \ 'bg':      ['bg', 'Normal'],
+  \ 'hl':      ['fg', 'Comment'],
+  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+  \ 'hl+':     ['fg', 'Statement'],
+  \ 'info':    ['fg', 'PreProc'],
+  \ 'border':  ['fg', 'Ignore'],
+  \ 'prompt':  ['fg', 'Conditional'],
+  \ 'pointer': ['fg', 'Exception'],
+  \ 'marker':  ['fg', 'Keyword'],
+  \ 'spinner': ['fg', 'Label'],
+  \ 'header':  ['fg', 'Comment'] }
 
-" Lightline
-let g:lightline = {
-  \ 'colorscheme': 'wombat',
-  \ 'active': {
-  \   'left': [ [ 'mode', 'paste' ],
-  \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ],
-  \   'right': [ [ 'lineinfo' ],
-  \              [ 'percent' ],
-  \              [ 'fileformat', 'fileencoding', 'filetype' ] ]
-  \ },
-  \ 'component_function': {
-  \   'gitbranch': 'fugitive#head',
-  \ },
-\ }
+nnoremap <silent> <expr> <Leader>p (expand('%') =~ 'NERD_tree' ? "\<C-W>\<C-W>" : '').":Files\<CR>"
+nnoremap <silent> <Leader><Enter>  :Buffers<CR>
+nnoremap <silent> <Leader>l        :Lines<CR>
+nnoremap <silent> <Leader>`        :Marks<CR>
+nnoremap <silent> <Leader>C        :Colors<CR>
+nnoremap <silent> q:               :History:<CR>
+nnoremap <silent> q/               :History/<CR>
 
-" NERDTree
-nnoremap <leader>n :NERDTreeToggle<cr>
+nnoremap <silent> <Leader>f        :Rg <C-R><C-W><CR>
+nnoremap <silent> <Leader>rg       :Rg <C-R><C-W><CR>
+nnoremap <silent> <Leader>RG       :Rg <C-R><C-A><CR>
+xnoremap <silent> <Leader>rg       y:Rg <C-R>"<CR>
 
-" Undotree
-let g:undotree_WindowLayout = 2
-nnoremap <leader>u :UndotreeToggle<CR>
+" }}}
 
-" Fuzzy Finder (fzf)
-nnoremap <silent> <leader>p :Files<CR>
-nnoremap <silent> <leader>l :Buffers<CR>
-nnoremap <silent> <leader>L :Lines<CR>
-nnoremap <silent> <leader>; :Rg<CR>
-nnoremap <silent> <leader>, :History<CR>
-nnoremap <silent> <leader>. :History:<CR>
-nnoremap <silent> <leader>/ :History/<CR>
+" Auto Command {{{
 
-" Lsp
-let g:lsp_diagnostics_echo_cursor = 1
-nmap <silent> <leader>d <Plug>(lsp-definition)
-nmap <silent> <leader>s :split<CR><Plug>(lsp-definition)
-nmap <silent> <leader>v :vsplit<CR><Plug>(lsp-definition)
-nmap <silent> <leader>h <Plug>(lsp-hover)
-nmap <silent> <leader>r <Plug>(lsp-references)
-nmap <silent> <leader>i <Plug>(lsp-implementation)
-nmap <silent> <leader>f <Plug>(lsp-document-format)
-"
-" Lsp Autocomplete
-let g:lsp_async_completion = 1
-inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-inoremap <expr> <cr>    pumvisible() ? "\<C-y>" : "\<CR>"
-
-" Rust
-augroup rust
-  if executable('rls')
-    autocmd!
-    au User lsp_setup call lsp#register_server({
-      \ 'name': 'rls',
-      \ 'cmd': {server_info->['rustup', 'run', 'nightly', 'rls']},
-      \ 'workspace_config': {'rust': {'clippy_preference': 'on'}},
-      \ 'whitelist': ['rust'],
-      \ })
-    autocmd FileType rust setlocal omnifunc=lsp#complete
-
-    "highlight LspWarningHighlight cterm=underline,bold
-    "highlight LspErrorHighlight ctermbg=197
-  endif    
+augroup vimrc
+  au BufWritePost vimrc,.vimrc nested if expand('%') !~ 'fugitive' | source % | endif
 augroup END
 
-" Rip Grep
-if executable('rg')
-  set grepprg=rg\ --no-heading\ --vimgrep
-  set grepformat=%f:%l:%c:%m
-endif
-
-" Practice key mapping (for manju)
-nnoremap <S-q> <Nop>
+" }}}

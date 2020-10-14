@@ -69,6 +69,9 @@ Plug 'preservim/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'preservim/tagbar', { 'on': 'TagbarToggle' }
   let g:tagbar_sort = 0
   nnoremap <Leader>m :TagbarToggle<CR>
+Plug 'ludovicchabant/vim-gutentags'
+  let g:gutentags_ctags_tagfile = '.git/tags'
+  let g:gutentags_ctags_exclude = ['.git']
 
 " Git
 Plug 'tpope/vim-fugitive'
@@ -190,7 +193,7 @@ set foldlevelstart=99
 set virtualedit=block
 
 " Ctags
-set tags=./tags;/
+set tags=./.git/tags;./tags;/
 
 " Semi-persistent undo
 set undodir=/tmp,.
@@ -263,9 +266,6 @@ inoremap <C-j> <C-o>j
 inoremap <C-k> <C-o>k
 inoremap <C-^> <C-o><C-^>
 
-nnoremap <C-]> g<C-]>
-nnoremap g[ :pop<CR>
-
 " Make Y behave like other capitals
 nnoremap Y y$
 
@@ -297,6 +297,8 @@ if &term =~ 'screen'
 endif
 
 " Tags
+nnoremap <C-]> g<C-]>
+nnoremap g[ :pop<CR>
 
 " }}}
 

@@ -68,11 +68,17 @@ Plug 'preservim/nerdtree', { 'on': 'NERDTreeToggle' }
   nnoremap <Leader>n :NERDTreeToggle<CR>
 Plug 'preservim/tagbar', { 'on': 'TagbarToggle' }
   let g:tagbar_sort = 0
+  nnoremap <Leader>m :TagbarToggle<CR>
 
 " Git
 Plug 'tpope/vim-fugitive'
   nmap     <Leader>g :Gstatus<CR>gg<C-n>
   nnoremap <Leader>d :Gdiff<CR>
+
+" Make Vim place nicely with iTerm2 and tmux.
+Plug 'jszakmeister/vim-togglecursor'
+  let g:togglecursor_default = 'blinking_block'
+  let g:togglecursor_insert = 'blinking_line'
 
 call plug#end()
 
@@ -171,9 +177,12 @@ set backup
 set backupdir=/tmp//,.
 set directory=/tmp//,.
 
-" Omni completion
-set completeopt=menuone,preview
-set complete-=i
+" TODO: Omni completion
+" set completeopt=menuone,preview
+" set complete-=i
+set completeopt+=menuone   " show the popup menu even when there is only 1 match
+set completeopt+=noinsert  " don't insert any text until user chooses a match
+set completeopt-=longest   " don't insert the longest common text"
 
 " Folds
 set foldlevelstart=99
@@ -263,8 +272,8 @@ nnoremap Y y$
 " qq to record, Q to replay
 nnoremap Q @q
 
-" Toggle between buffers (quickly)
-nnoremap <silent> <Leader><Leader> <C-^>
+" TODO: Toggle between buffers (quickly)
+" nnoremap <silent> <Leader><Leader> <C-^>
 
 " Circular windows navigation
 nnoremap <Tab>   <C-W>w
@@ -282,7 +291,7 @@ endfunction
 nnoremap <silent> <Leader>z :call <SID>zoom()<CR>
 
 " Disable CTRL-A on tmux or on screen
-if $TERM =~ 'screen'
+if &term =~ 'screen'
   nnoremap <C-a> <nop>
   nnoremap <Leader><C-a> <C-a>
 endif
@@ -294,7 +303,7 @@ endif
 " Fuzzy Finder (Fzf) & Rip Grep (rg) {{{
 
 let $FZF_DEFAULT_OPTS .= ' --inline-info'
-let $FZF_DEFAULT_COMMAND = 'rg --files --follow'
+let $FZF_DEFAULT_COMMAND = 'rg --files'
 
 " Terminal buffer options for fzf
 autocmd! FileType fzf
@@ -315,9 +324,10 @@ let g:fzf_colors = {
   \ 'spinner': ['fg', 'Label'],
   \ 'header':  ['fg', 'Comment'] }
 
-nnoremap <silent> <expr> <Leader>p (expand('%') =~ 'NERD_tree' ? "\<C-W>\<C-W>" : '').":Files\<CR>"
+nnoremap <silent> <expr> <Leader><Leader> (expand('%') =~ 'NERD_tree' ? "\<C-W>\<C-W>" : '').":Files\<CR>"
 nnoremap <silent> <Leader><Enter>  :Buffers<CR>
 nnoremap <silent> <Leader>l        :Lines<CR>
+nnoremap <silent> <Leader>t        :Tags<CR>
 nnoremap <silent> <Leader>`        :Marks<CR>
 nnoremap <silent> <Leader>C        :Colors<CR>
 nnoremap <silent> q:               :History:<CR>

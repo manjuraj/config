@@ -83,6 +83,12 @@ Plug 'jszakmeister/vim-togglecursor'
   let g:togglecursor_default = 'blinking_block'
   let g:togglecursor_insert = 'blinking_line'
 
+" Python
+
+" R
+
+" Scala
+
 call plug#end()
 
 " }}}
@@ -180,12 +186,10 @@ set backup
 set backupdir=/tmp//,.
 set directory=/tmp//,.
 
-" TODO: Omni completion
-" set completeopt=menuone,preview
-" set complete-=i
-set completeopt+=menuone   " show the popup menu even when there is only 1 match
-set completeopt+=noinsert  " don't insert any text until user chooses a match
-set completeopt-=longest   " don't insert the longest common text"
+" Omni completion
+set completeopt+=menuone  " show the popup menu even when there is only 1 match
+set completeopt+=noinsert " don't insert any text until user chooses a match
+set completeopt-=longest  " don't insert the longest common text"
 
 " Folds
 set foldlevelstart=99
@@ -332,8 +336,8 @@ nnoremap <silent> <Leader>l        :Lines<CR>
 nnoremap <silent> <Leader>t        :Tags<CR>
 nnoremap <silent> <Leader>`        :Marks<CR>
 nnoremap <silent> <Leader>C        :Colors<CR>
-nnoremap <silent> q:               :History:<CR>
-nnoremap <silent> q/               :History/<CR>
+nnoremap <silent> <Leader>;        :History:<CR>
+nnoremap <silent> <Leader>/        :History/<CR>
 
 nnoremap <silent> <Leader>f        :Rg <C-R><C-W><CR>
 nnoremap <silent> <Leader>rg       :Rg <C-R><C-W><CR>

@@ -1,5 +1,5 @@
-# .*
-# !.gitignore
+.*
+!.gitignore
 
 # java
 
@@ -28,22 +28,6 @@ tags
 # sbt
 
 target/
-
-# finatra
-
-logs
-
-# playframework
-
-lib
-logs
-modules
-precompiled
-project/project
-project/target
-target
-tmp
-test-result
 
 # C
 # compiled object files

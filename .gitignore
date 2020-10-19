@@ -1,19 +1,28 @@
 .*
 !.gitignore
 
+# vim
+*.swp
+*~
+*.bak
+*.orig
+
+# vscode
+.vscode/
+
+# intellij
+*.iml
+*.ipr
+*.iws
+.idea/
+
+
 # java
 
 *.class
 *.jar
 *.war
 *.ear
-
-# intellij
-
-*.iml
-*.ipr
-*.iws
-.idea/
 
 # eclipse
 
@@ -43,25 +52,36 @@ target/
 *.gcno
 *.gcov
 
-# python
+# Python
 *.pyc
+__pycache__
 
-# core dump
+# PyTorch
+*.pt
+
+# Latex
+*.aux
+*.fdb_latexmk
+*.toc
+*.fls
+*.pre
+
+# Core dump
 core*
 
-# temporary
-*.swp
-*~
-*.bak
-*.orig
+# Temporary
 *.pid
 *.DS_Store
 RUNNING_PID
 classpath.txt
 
-# packages
+# Packages
 *.tar
-*.tar.gz
+*.gz
 *.tar.bz2
 *.zip
 *.bz2
+
+# Logs
+*.log
+*.out

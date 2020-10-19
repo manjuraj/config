@@ -80,7 +80,7 @@ Plug 'tpope/vim-fugitive'
 
 " Make Vim place nicely with iTerm2 and tmux.
 Plug 'jszakmeister/vim-togglecursor'
-  let g:togglecursor_default = 'blinking_block'
+  let g:togglecursor_default = 'blinking_line'
   let g:togglecursor_insert = 'blinking_line'
 
 " Python
@@ -88,6 +88,12 @@ Plug 'jszakmeister/vim-togglecursor'
 " R
 
 " Scala
+
+" Latex
+Plug 'lervag/vimtex'
+  let g:tex_flavor = 'latex'
+  let g:vimtex_quickfix_mode = 0
+  let g:tex_conceal = 'abdmg'
 
 call plug#end()
 
@@ -316,7 +322,7 @@ autocmd! FileType fzf
 autocmd  FileType fzf set noshowmode noruler nonumber
 
 let g:fzf_colors = { 
-	\ 'fg':      ['fg', 'Normal'],
+  \ 'fg':      ['fg', 'Normal'],
   \ 'bg':      ['bg', 'Normal'],
   \ 'hl':      ['fg', 'Comment'],
   \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
@@ -351,5 +357,12 @@ xnoremap <silent> <Leader>rg       y:Rg <C-R>"<CR>
 augroup vimrc
   au BufWritePost vimrc,.vimrc nested if expand('%') !~ 'fugitive' | source % | endif
 augroup END
+
+" }}}
+
+" Function and Commands {{{
+
+" Chomp
+command! Chomp %s/\s\+$// | normal! ``
 
 " }}}

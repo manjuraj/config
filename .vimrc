@@ -1,8 +1,14 @@
 " vim: set foldmethod=marker foldlevel=0 nomodeline:
+
 " Minimal Settings {{{
+set nocompatible
 
 " Switch syntax highlighting on
 syntax on
+
+" Use new Regex engine
+" https://jameschambers.co.uk/vim-typescript-slow
+set re=0
 
 " Make backspace behave in a sane manner
 set backspace=indent,eol,start
@@ -10,10 +16,6 @@ set backspace=indent,eol,start
  " Enable file type detection and do language-dependent indenting
 filetype plugin indent on
 filetype detect
-
-" Vim 8 defaults
-unlet! skip_defaults_vim
-silent! source $VIMRUNTIME/defaults.vim
 
 augroup vimrc
   autocmd!
@@ -59,11 +61,11 @@ Plug 'preservim/nerdtree', { 'on': 'NERDTreeToggle' }
   augroup nerd_loader
     autocmd!
     autocmd VimEnter * silent! autocmd! FileExplorer
-    autocmd BufEnter,BufNew *
-      \  if isdirectory(expand('<amatch>'))
-      \|   call plug#load('nerdtree')
-      \|   execute 'autocmd! nerd_loader'
-      \| endif
+    autocmd BufEnter,BufNewFile *
+          \ if isdirectory(expand('<amatch>')) |
+          \   call plug#load('nerdtree')       |
+          \   execute 'autocmd! nerd_loader'   |
+          \ endif
   augroup END
   nnoremap <Leader>n :NERDTreeToggle<CR>
 Plug 'preservim/tagbar', { 'on': 'TagbarToggle' }
@@ -83,17 +85,24 @@ Plug 'jszakmeister/vim-togglecursor'
   let g:togglecursor_default = 'blinking_line'
   let g:togglecursor_insert = 'blinking_line'
 
+Plug 'sheerun/vim-polyglot'
+
+" Markdown
+
+
 " Python
 
 " R
 
 " Scala
 
+
 " Latex
 Plug 'lervag/vimtex'
   let g:tex_flavor = 'latex'
   let g:vimtex_quickfix_mode = 0
   let g:tex_conceal = 'abdmg'
+
 
 call plug#end()
 
@@ -107,7 +116,8 @@ set history=8196
 " Tabs 
 set tabstop=2
 set shiftwidth=2
-set expandtab smarttab
+set expandtab
+set smarttab
 
 " Indent, Wrap
 set autoindent
@@ -123,6 +133,10 @@ set showcmd
 set ruler
 set laststatus=2
 set noshowmode
+
+" Toggle paste mode
+set pastetoggle=<Leader>p
+nnoremap <Leader>p :set invpaste paste?<CR>
 
 " Search
 set ignorecase smartcase
@@ -151,7 +165,7 @@ set shortmess=aIT
 set clipboard+=unnamed,autoselect
 
 set ttyfast
-set lazyredraw
+"set lazyredraw
 
 " Mouse
 set mouse=a
@@ -206,7 +220,7 @@ set virtualedit=block
 set tags=./.git/tags;./tags;/
 
 " Semi-persistent undo
-set undodir=/tmp,.
+set undodir=/tmp//,.
 set undofile
 
 " }}} 
@@ -241,6 +255,10 @@ if has('termguicolors')
   set termguicolors
 endif
 
+" seoul256 (dark):
+"   Range:   233 (darkest) ~ 239 (lightest)
+"   Default: 237
+let g:seoul256_background = 235
 silent! colorscheme seoul256
 
 " }}}
@@ -314,12 +332,18 @@ nnoremap g[ :pop<CR>
 
 " Fuzzy Finder (Fzf) & Rip Grep (rg) {{{
 
-let $FZF_DEFAULT_OPTS .= ' --inline-info'
-let $FZF_DEFAULT_COMMAND = 'rg --files'
+if exists('$FZF_DEFAULT_OPTS')
+  let $FZF_DEFAULT_OPTS = $FZF_DEFAULT_OPTS . ' --inline-info'
+else
+  let $FZF_DEFAULT_OPTS = '--inline-info'
+endif
+let $FZF_DEFAULT_COMMAND = 'rg --files --hidden --glob "!.git/*" -I'
 
 " Terminal buffer options for fzf
-autocmd! FileType fzf
-autocmd  FileType fzf set noshowmode noruler nonumber
+augroup my_fzf_ui
+  autocmd!
+  autocmd FileType fzf setlocal noshowmode noruler nonumber
+augroup END
 
 let g:fzf_colors = { 
   \ 'fg':      ['fg', 'Normal'],
@@ -366,3 +390,4 @@ augroup END
 command! Chomp %s/\s\+$// | normal! ``
 
 " }}}
+"

@@ -1,5 +1,8 @@
 .*
 !.gitignore
+!.vimrc
+!.zprofile
+!.zshrc
 
 # vim
 *.swp

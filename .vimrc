@@ -1,7 +1,6 @@
 " vim: set foldmethod=marker foldlevel=0 nomodeline:
 
 " Minimal Settings {{{
-set nocompatible
 
 " Switch syntax highlighting on
 syntax on
@@ -15,15 +14,13 @@ set backspace=indent,eol,start
 
  " Enable file type detection and do language-dependent indenting
 filetype plugin indent on
-filetype detect
 
 augroup vimrc
   autocmd!
 augroup END
 
-let s:darwin = has('mac')
 let mapleader = "\<Space>"
-let maplocalleader = "\<Space>"
+let maplocalleader = ","
 
 " }}}
 
@@ -44,8 +41,11 @@ Plug 'joshdick/onedark.vim'
 Plug 'junegunn/seoul256.vim'
 
 " Edit
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-commentary'
+Plug 'jiangmiao/auto-pairs'
 Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
   let g:undotree_WindowLayout = 2
   nnoremap U :UndotreeToggle<CR>
@@ -57,17 +57,6 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 
 " Browsing
-Plug 'preservim/nerdtree', { 'on': 'NERDTreeToggle' }
-  augroup nerd_loader
-    autocmd!
-    autocmd VimEnter * silent! autocmd! FileExplorer
-    autocmd BufEnter,BufNewFile *
-          \ if isdirectory(expand('<amatch>')) |
-          \   call plug#load('nerdtree')       |
-          \   execute 'autocmd! nerd_loader'   |
-          \ endif
-  augroup END
-  nnoremap <Leader>n :NERDTreeToggle<CR>
 Plug 'preservim/tagbar', { 'on': 'TagbarToggle' }
   let g:tagbar_sort = 0
   nnoremap <Leader>m :TagbarToggle<CR>
@@ -76,26 +65,18 @@ Plug 'ludovicchabant/vim-gutentags'
   let g:gutentags_ctags_exclude = ['.git']
 
 " Git
+Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
-  nmap     <Leader>g :Gstatus<CR>gg<C-n>
-  nnoremap <Leader>d :Gdiff<CR>
+  nmap     <Leader>g :Git<CR>gg<C-n>
+  nnoremap <Leader>d :Gdiffsplit<CR>
 
-" Make Vim place nicely with iTerm2 and tmux.
+" Make Vim play nicely with iTerm2 and tmux.
 Plug 'jszakmeister/vim-togglecursor'
   let g:togglecursor_default = 'blinking_line'
   let g:togglecursor_insert = 'blinking_line'
 
+let g:polyglot_disabled = ['latex']  " vimtex handles LaTeX
 Plug 'sheerun/vim-polyglot'
-
-" Markdown
-
-
-" Python
-
-" R
-
-" Scala
-
 
 " Latex
 Plug 'lervag/vimtex'
@@ -121,7 +102,6 @@ set smarttab
 
 " Indent, Wrap
 set autoindent
-set smartindent
 set wrap
 set whichwrap=b,s
 let &showbreak = '↳ '
@@ -133,10 +113,6 @@ set showcmd
 set ruler
 set laststatus=2
 set noshowmode
-
-" Toggle paste mode
-set pastetoggle=<Leader>p
-nnoremap <Leader>p :set invpaste paste?<CR>
 
 " Search
 set ignorecase smartcase
@@ -164,7 +140,6 @@ set shortmess=aIT
 " autoselect option configures visually selected text to "* register.
 set clipboard+=unnamed,autoselect
 
-set ttyfast
 "set lazyredraw
 
 " Mouse
@@ -172,9 +147,7 @@ set mouse=a
 
 " 80 chars/line
 set textwidth=0
-if exists('&colorcolumn')
-  set colorcolumn=80
-endif
+set colorcolumn=80
 
 " Keep the cursor on the same column
 set nostartofline
@@ -201,10 +174,10 @@ set splitright
 set list
 set listchars=tab:\|\ ,
 
-" Backup and Temporary files
+" Backup and Temporary files (mkdir -p ~/.vim/{backup,swap,undo})
 set backup
-set backupdir=/tmp//,.
-set directory=/tmp//,.
+set backupdir=~/.vim/backup//,.
+set directory=~/.vim/swap//,.
 
 " Omni completion
 set completeopt+=menuone  " show the popup menu even when there is only 1 match
@@ -212,15 +185,15 @@ set completeopt+=noinsert " don't insert any text until user chooses a match
 set completeopt-=longest  " don't insert the longest common text"
 
 " Folds
-set foldlevelstart=99
+set foldlevelstart=0
 
 set virtualedit=block
 
 " Ctags
 set tags=./.git/tags;./tags;/
 
-" Semi-persistent undo
-set undodir=/tmp//,.
+" Persistent undo (survives reboot)
+set undodir=~/.vim/undo//,.
 set undofile
 
 " }}} 
@@ -265,6 +238,9 @@ silent! colorscheme seoul256
 
 " Mappings {{{
 
+" Browse files (netrw)
+nnoremap <Leader>n :Explore<CR>
+
 nnoremap ; :
 
 " Save
@@ -300,9 +276,6 @@ nnoremap Y y$
 " qq to record, Q to replay
 nnoremap Q @q
 
-" TODO: Toggle between buffers (quickly)
-" nnoremap <silent> <Leader><Leader> <C-^>
-
 " Circular windows navigation
 nnoremap <Tab>   <C-W>w
 nnoremap <S-Tab> <C-W>W
@@ -324,8 +297,36 @@ if &term =~ 'screen'
   nnoremap <Leader><C-a> <C-a>
 endif
 
-" Tags
-nnoremap <C-]> g<C-]>
+" Tags — prioritize non-dotfile paths over dotfile paths
+function! s:smart_tag_jump()
+  let l:word = expand('<cword>')
+  let l:tags = taglist('^' . l:word . '$')
+  if empty(l:tags)
+    echo 'Tag not found: ' . l:word
+    return
+  endif
+  " Sort: non-dot paths first, dot paths last
+  let l:project = filter(copy(l:tags), 'v:val.filename !~# "^\\."')
+  let l:dotfile = filter(copy(l:tags), 'v:val.filename =~# "^\\."')
+  let l:sorted = l:project + l:dotfile
+  if len(l:sorted) == 1
+    execute 'tag ' . l:word
+  else
+    let l:choices = []
+    let l:idx = 1
+    for t in l:sorted
+      call add(l:choices, printf('%2d  %s  %s  %s', l:idx, t.kind, t.filename, t.cmd))
+      let l:idx += 1
+    endfor
+    let l:pick = inputlist([printf('Select tag: %s', l:word)] + l:choices)
+    if l:pick > 0 && l:pick <= len(l:sorted)
+      let l:t = l:sorted[l:pick - 1]
+      execute 'edit ' . fnameescape(l:t.filename)
+      execute l:t.cmd
+    endif
+  endif
+endfunction
+nnoremap <silent> <C-]> :call <SID>smart_tag_jump()<CR>
 nnoremap g[ :pop<CR>
 
 " }}}
@@ -360,7 +361,7 @@ let g:fzf_colors = {
   \ 'spinner': ['fg', 'Label'],
   \ 'header':  ['fg', 'Comment'] }
 
-nnoremap <silent> <expr> <Leader><Leader> (expand('%') =~ 'NERD_tree' ? "\<C-W>\<C-W>" : '').":Files\<CR>"
+nnoremap <silent> <Leader><Leader> :Files<CR>
 nnoremap <silent> <Leader><Enter>  :Buffers<CR>
 nnoremap <silent> <Leader>l        :Lines<CR>
 nnoremap <silent> <Leader>t        :Tags<CR>
@@ -369,7 +370,7 @@ nnoremap <silent> <Leader>C        :Colors<CR>
 nnoremap <silent> <Leader>;        :History:<CR>
 nnoremap <silent> <Leader>/        :History/<CR>
 
-nnoremap <silent> <Leader>f        :Rg <C-R><C-W><CR>
+nnoremap <silent> <Leader>f        :Rg<CR>
 nnoremap <silent> <Leader>rg       :Rg <C-R><C-W><CR>
 nnoremap <silent> <Leader>RG       :Rg <C-R><C-A><CR>
 xnoremap <silent> <Leader>rg       y:Rg <C-R>"<CR>

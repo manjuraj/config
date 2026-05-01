@@ -10,3 +10,8 @@ When writing design docs or markdown reference files:
 - Use ASCII diagrams over prose when showing architecture
 - Headings: sentence case
 - File naming: lowercase-hyphen.md
+
+# Git Commits
+
+- Do not add Claude attribution (no `Co-Authored-By: Claude` trailers, no
+  "Generated with Claude Code" lines) when committing code.

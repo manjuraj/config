@@ -62,7 +62,7 @@ Plug 'preservim/tagbar', { 'on': 'TagbarToggle' }
   nnoremap <Leader>m :TagbarToggle<CR>
 Plug 'ludovicchabant/vim-gutentags'
   let g:gutentags_ctags_tagfile = '.git/tags'
-  let g:gutentags_ctags_exclude = ['.git']
+  let g:gutentags_ctags_exclude = ['.git', 'target', 'node_modules', '__pycache__']
 
 " Git
 Plug 'airblade/vim-gitgutter'
@@ -365,6 +365,7 @@ nnoremap <silent> <Leader><Leader> :Files<CR>
 nnoremap <silent> <Leader><Enter>  :Buffers<CR>
 nnoremap <silent> <Leader>l        :Lines<CR>
 nnoremap <silent> <Leader>t        :Tags<CR>
+nnoremap <silent> <Leader>T        :Tags <C-R><C-W><CR>
 nnoremap <silent> <Leader>`        :Marks<CR>
 nnoremap <silent> <Leader>C        :Colors<CR>
 nnoremap <silent> <Leader>;        :History:<CR>

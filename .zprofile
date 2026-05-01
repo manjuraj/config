@@ -1,6 +1,10 @@
 # ~/.zprofile — login shell only (PATH, env vars)
 # Runs once per login session, not on every subshell.
 
+# nix (survives macOS updates that wipe /etc/zshrc)
+[[ -e /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh ]] && \
+  . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
+
 # homebrew
 eval "$(/opt/homebrew/bin/brew shellenv)" 2>/dev/null || true
 

@@ -25,13 +25,13 @@
           minimal = with pkgs; [ zsh gh bat jq ];
 
           buildTools = with pkgs; [
-            pkg-config clang libiconv
+            pkg-config clang
             autoconf automake libtool
-          ];
+          ] ++ pkgs.lib.optionals pkgs.stdenv.isDarwin [ pkgs.libiconv ];
 
           services = with pkgs; [ docker redis memcached ];
 
-          media = with pkgs; [ ffmpeg-full whisper-cpp ];
+          media = with pkgs; [ ffmpeg whisper-cpp ];
 
           pythonPkgs = with pkgs; [ uv ruff black ];
 

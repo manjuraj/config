@@ -25,6 +25,8 @@ alias lla='ls -lha'
 alias lsd='ls -d */'
 alias cls='printf "\e[H\e[2J\e[3J"'
 alias grep='grep --color=auto'
+glow_p() { glow -p -w "$COLUMNS" "$1";}
+alias gp='glow_p'
 
 # named directories
 hash -d dev="$HOME/Development"

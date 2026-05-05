@@ -29,7 +29,7 @@
             autoconf automake libtool
           ] ++ pkgs.lib.optionals pkgs.stdenv.isDarwin [ pkgs.libiconv ];
 
-          services = with pkgs; [ docker redis memcached ];
+          services = with pkgs; [ docker redis memcached postgresql ];
 
           media = with pkgs; [ ffmpeg whisper-cpp ];
 

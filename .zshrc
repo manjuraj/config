@@ -31,6 +31,7 @@ alias gp='glow_p'
 # named directories
 hash -d dev="$HOME/Development"
 hash -d cvl="$HOME/Development/Crestview-Labs"
+hash -d m="$HOME/Development/Mad-Labs"
 hash -d flake="$HOME/Development/flake"
 hash -d notes="$HOME/Google Drive/My Drive/notes"
 

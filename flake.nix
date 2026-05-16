@@ -40,7 +40,7 @@
               "cargo" "clippy" "rustc" "rustfmt" "rust-src"
             ])
             pkgs.fenix.rust-analyzer
-            cargo-nextest cargo-watch cargo-expand
+            cargo-nextest cargo-watch cargo-expand cargo-audit
           ];
 
           nodePkgs = with pkgs; [ nodejs_20 pnpm deno ];

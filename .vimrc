@@ -320,9 +320,8 @@ function! s:smart_tag_jump()
     endfor
     let l:pick = inputlist([printf('Select tag: %s', l:word)] + l:choices)
     if l:pick > 0 && l:pick <= len(l:sorted)
-      let l:t = l:sorted[l:pick - 1]
-      execute 'edit ' . fnameescape(l:t.filename)
-      execute l:t.cmd
+      " Use :N tag to push onto tag stack (so <C-t> and g[ work)
+      execute l:pick . 'tag ' . l:word
     endif
   endif
 endfunction

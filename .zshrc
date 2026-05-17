@@ -25,6 +25,8 @@ alias lla='ls -lha'
 alias lsd='ls -d */'
 alias cls='printf "\e[H\e[2J\e[3J"'
 alias grep='grep --color=auto'
+
+# functions
 glow_p() { glow -p -w "$COLUMNS" "$1";}
 alias gp='glow_p'
 
@@ -49,7 +51,12 @@ zstyle ':vcs_info:git:*' actionformats ' %F{yellow}%b%f %F{red}(%a)%f%u%c'
 
 _my_prompt_precmd() {
   vcs_info
-  PROMPT='%F{blue}%~%f${vcs_info_msg_0_}
+  # Show ? for untracked files
+  _prompt_untracked=''
+  if git rev-parse --is-inside-work-tree &>/dev/null && [[ -n $(git ls-files --others --exclude-standard 2>/dev/null | head -1) ]]; then
+    _prompt_untracked='%F{white}!%f'
+  fi
+  PROMPT='%F{blue}%~%f${vcs_info_msg_0_}${_prompt_untracked}
 %(?.%F{green}.%F{red})❯%f '
 
   if [[ -n $IN_NIX_SHELL ]]; then

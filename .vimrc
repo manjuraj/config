@@ -381,6 +381,8 @@ xnoremap <silent> <Leader>rg       y:Rg <C-R>"<CR>
 
 augroup vimrc
   au BufWritePost vimrc,.vimrc nested if expand('%') !~ 'fugitive' | source % | endif
+  " Markdown: auto-wrap at 80 cols as you type
+  au FileType markdown setlocal textwidth=80 formatoptions+=t
 augroup END
 
 " }}}

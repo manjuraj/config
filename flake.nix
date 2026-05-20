@@ -97,6 +97,18 @@
             RUST_SRC_PATH = "${pkgs.fenix.stable.rust-src}/lib/rustlib/src/rust/library";
           };
 
+          rust-nightly = pkgs.mkShell {
+            packages = minimal ++ buildTools ++ (with pkgs; [
+              (pkgs.fenix.complete.withComponents [
+                "cargo" "clippy" "rustc" "rustfmt" "rust-src"
+              ])
+              pkgs.fenix.rust-analyzer
+              cargo-nextest cargo-watch cargo-expand cargo-audit
+            ]);
+            shellHook = zshHook;
+            RUST_SRC_PATH = "${pkgs.fenix.complete.rust-src}/lib/rustlib/src/rust/library";
+          };
+
           node = pkgs.mkShell {
             packages = minimal ++ nodePkgs;
             shellHook = zshHook;

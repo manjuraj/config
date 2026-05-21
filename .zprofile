@@ -11,6 +11,9 @@ eval "$(/opt/homebrew/bin/brew shellenv)" 2>/dev/null || true
 # node (via homebrew)
 export PATH="/opt/homebrew/opt/node@22/bin:$PATH"
 
+# python (unversioned symlinks: python, pip, etc.)
+export PATH="/opt/homebrew/opt/python@3.14/libexec/bin:$PATH"
+
 # editor
 export EDITOR="vim"
 export VISUAL="$EDITOR"

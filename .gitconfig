@@ -1,26 +1,37 @@
 [user]
-   name = Manjunath Rajashekhar
-   email = manj@cs.stanford.edu
-[alias]
-   st   = status
-   br   = branch
-   co   = checkout
-   ci   = commit
-   df   = diff
-   lg   = log -p
-    d   = difftool
-   prev = checkout HEAD^1
-   next = "!sh -c 'git log --reverse --pretty=%H master | awk \"/$(git rev-parse HEAD)/{getline;print}\" | xargs git checkout'"
-
-[color]
-   ui = auto
+	name = Manju Rajashekhar
+	email = manj@cs.stanford.edu
 [core]
-   editor = vim
-   excludesfile = ~/.gitignore
+	editor = vim
+	pager = delta
+	excludesfile = ~/.gitignore
+[alias]
+	st   = status
+	br   = branch
+	co   = checkout
+	ci   = commit
+	df   = diff
+	lg   = log -p
+	d    = difftool
+	prev = checkout HEAD^1
+	next = "!sh -c 'git log --reverse --pretty=%H master | awk \"/$(git rev-parse HEAD)/{getline;print}\" | xargs git checkout'"
+[color]
+	ui = auto
 [push]
-   default = current
+	default = current
+[pull]
+	ff = only
 [diff]
-   tool = vimdiff
+	tool = vimdiff
+	algorithm = histogram
 [difftool]
-   prompt = false
-   trustExitCode = true # abort all diffs with `:cq`
+	prompt = false
+	trustExitCode = true
+[interactive]
+	diffFilter = delta --color-only
+[delta]
+	navigate = true
+	side-by-side = true
+	line-numbers = true
+[merge]
+	conflictStyle = zdiff3

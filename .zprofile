@@ -23,7 +23,7 @@ export FZF_DEFAULT_COMMAND='rg --files --hidden -g "!.git/*" -I'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_CTRL_T_OPTS='--preview "bat --style=numbers --line-range=:200 --color=always {} 2>/dev/null || head -n 200 {}"'
 
-# uv / rustup (guard in case file doesn't exist)
+# uv and other ~/.local/bin tools
 [[ -f "$HOME/.local/bin/env" ]] && . "$HOME/.local/bin/env"
 
 # Added by OrbStack: command-line tools and integration

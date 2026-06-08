@@ -32,10 +32,11 @@ alias gp='glow_p'
 
 # named directories
 hash -d dev="$HOME/Development"
-hash -d cvl="$HOME/Development/Crestview-Labs"
+hash -d c="$HOME/Development/config"
 hash -d m="$HOME/Development/Mad-Labs"
 hash -d flake="$HOME/Development/flake"
 hash -d notes="$HOME/Google Drive/My Drive/notes"
+hash -d cvl="$HOME/Development/Crestview-Labs"
 
 # prompt — two-line: path + git on line 1, input on line 2
 autoload -Uz vcs_info add-zsh-hook

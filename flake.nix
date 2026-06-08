@@ -35,8 +35,19 @@
 
           pythonPkgs = with pkgs; [ uv ruff black ];
 
+          # Pinned Rust toolchain — single source of truth for the version.
+          # `toolchainOf` pins an exact release; `fenix.stable` would instead
+          # float with the fenix input (the cause of the 1.95/1.96 drift).
+          # To change versions: bump `channel`, set `sha256` back to
+          # `pkgs.lib.fakeHash`, run `nix develop`, and paste the real hash
+          # nix prints into `sha256`.
+          rustToolchain = pkgs.fenix.toolchainOf {
+            channel = "1.96.0";
+            sha256  = "sha256-mvUGEOHYJpn3ikC5hckneuGixaC+yGrkMM/liDIDgoU=";
+          };
+
           rustPkgs = with pkgs; [
-            (pkgs.fenix.stable.withComponents [
+            (rustToolchain.withComponents [
               "cargo" "clippy" "rustc" "rustfmt" "rust-src"
             ])
             pkgs.fenix.rust-analyzer
@@ -91,10 +102,16 @@
             shellHook = uvZshHook;
           };
 
+          python-rust = pkgs.mkShell {
+            packages = minimal ++ buildTools ++ pythonPkgs ++ rustPkgs;
+            shellHook = uvZshHook;
+            RUST_SRC_PATH = "${pkgs.fenix.stable.rust-src}/lib/rustlib/src/rust/library";
+          };
+
           rust = pkgs.mkShell {
             packages = minimal ++ buildTools ++ rustPkgs;
             shellHook = zshHook;
-            RUST_SRC_PATH = "${pkgs.fenix.stable.rust-src}/lib/rustlib/src/rust/library";
+            RUST_SRC_PATH = "${rustToolchain.rust-src}/lib/rustlib/src/rust/library";
           };
 
           rust-nightly = pkgs.mkShell {

@@ -29,7 +29,7 @@
             autoconf automake libtool
           ] ++ pkgs.lib.optionals pkgs.stdenv.isDarwin [ pkgs.libiconv ];
 
-          services = with pkgs; [ docker redis memcached postgresql ];
+          services = with pkgs; [ redis memcached postgresql ];
 
           media = with pkgs; [ ffmpeg whisper-cpp ];
 
@@ -41,20 +41,31 @@
           # To change versions: bump `channel`, set `sha256` back to
           # `pkgs.lib.fakeHash`, run `nix develop`, and paste the real hash
           # nix prints into `sha256`.
-          rustToolchain = pkgs.fenix.toolchainOf {
-            channel = "1.96.0";
-            sha256  = "sha256-mvUGEOHYJpn3ikC5hckneuGixaC+yGrkMM/liDIDgoU=";
+          rustChannel = "1.96.0";
+          rustSha256 = "sha256-mvUGEOHYJpn3ikC5hckneuGixaC+yGrkMM/liDIDgoU=";
+          rustHostToolchain = pkgs.fenix.toolchainOf {
+            channel = rustChannel;
+            sha256 = rustSha256;
           };
-
-          rustPkgs = with pkgs; [
-            (rustToolchain.withComponents [
+          rustTargetToolchain = pkgs.fenix.targets.aarch64-unknown-linux-gnu.toolchainOf {
+            channel = rustChannel;
+            sha256 = rustSha256;
+          };
+          rustToolchain = pkgs.fenix.combine [
+            (rustHostToolchain.withComponents [
               "cargo" "clippy" "rustc" "rustfmt" "rust-src"
             ])
-            pkgs.fenix.rust-analyzer
-            cargo-nextest cargo-watch cargo-expand cargo-audit
+            rustTargetToolchain.rust-std
           ];
 
-          nodePkgs = with pkgs; [ nodejs_20 pnpm deno ];
+          cargoTools = with pkgs; [
+            cargo-nextest cargo-watch cargo-expand cargo-audit cargo-zigbuild
+          ];
+
+          rustPkgs = [ rustToolchain pkgs.fenix.rust-analyzer ]
+            ++ cargoTools;
+
+          nodePkgs = with pkgs; [ nodejs_22 pnpm deno ];
 
           javaPkgs = with pkgs; [ jdk17_headless javacc ];
 
@@ -105,23 +116,22 @@
           python-rust = pkgs.mkShell {
             packages = minimal ++ buildTools ++ pythonPkgs ++ rustPkgs;
             shellHook = uvZshHook;
-            RUST_SRC_PATH = "${pkgs.fenix.stable.rust-src}/lib/rustlib/src/rust/library";
+            RUST_SRC_PATH = "${rustHostToolchain.rust-src}/lib/rustlib/src/rust/library";
           };
 
           rust = pkgs.mkShell {
             packages = minimal ++ buildTools ++ rustPkgs;
             shellHook = zshHook;
-            RUST_SRC_PATH = "${rustToolchain.rust-src}/lib/rustlib/src/rust/library";
+            RUST_SRC_PATH = "${rustHostToolchain.rust-src}/lib/rustlib/src/rust/library";
           };
 
           rust-nightly = pkgs.mkShell {
-            packages = minimal ++ buildTools ++ (with pkgs; [
+            packages = minimal ++ buildTools ++ [
               (pkgs.fenix.complete.withComponents [
                 "cargo" "clippy" "rustc" "rustfmt" "rust-src"
               ])
               pkgs.fenix.rust-analyzer
-              cargo-nextest cargo-watch cargo-expand cargo-audit
-            ]);
+            ] ++ cargoTools;
             shellHook = zshHook;
             RUST_SRC_PATH = "${pkgs.fenix.complete.rust-src}/lib/rustlib/src/rust/library";
           };

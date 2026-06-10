@@ -22,7 +22,7 @@
           zshBin = pkgs.lib.getExe pkgs.zsh;
 
           # --- Package Groups ---
-          minimal = with pkgs; [ zsh gh bat jq ];
+          minimal = with pkgs; [ zsh gh bat jq ripgrep ];
 
           buildTools = with pkgs; [
             pkg-config clang
@@ -36,27 +36,30 @@
           pythonPkgs = with pkgs; [ uv ruff black ];
 
           # Pinned Rust toolchain — single source of truth for the version.
-          # `toolchainOf` pins an exact release; `fenix.stable` would instead
-          # float with the fenix input (the cause of the 1.95/1.96 drift).
-          # To change versions: bump `channel`, set `sha256` back to
-          # `pkgs.lib.fakeHash`, run `nix develop`, and paste the real hash
-          # nix prints into `sha256`.
-          rustChannel = "1.96.0";
-          rustSha256 = "sha256-mvUGEOHYJpn3ikC5hckneuGixaC+yGrkMM/liDIDgoU=";
-          rustHostToolchain = pkgs.fenix.toolchainOf {
-            channel = rustChannel;
-            sha256 = rustSha256;
+          # To bump: update `channel`, set `sha256` to `pkgs.lib.fakeHash`,
+          # run `nix develop`, paste the real hash nix prints.
+          rustManifest = {
+            channel = "1.96.0";
+            sha256 = "sha256-mvUGEOHYJpn3ikC5hckneuGixaC+yGrkMM/liDIDgoU=";
           };
-          rustTargetToolchain = pkgs.fenix.targets.aarch64-unknown-linux-gnu.toolchainOf {
-            channel = rustChannel;
-            sha256 = rustSha256;
-          };
-          rustToolchain = pkgs.fenix.combine [
+          crossTargets = [
+            "aarch64-unknown-linux-gnu"
+            "x86_64-unknown-linux-gnu"
+          ];
+          rustHostToolchain = pkgs.fenix.toolchainOf rustManifest;
+          rustToolchain = pkgs.fenix.combine ([
             (rustHostToolchain.withComponents [
               "cargo" "clippy" "rustc" "rustfmt" "rust-src"
             ])
-            rustTargetToolchain.rust-std
+          ] ++ map (t:
+            (pkgs.fenix.targets.${t}.toolchainOf rustManifest).rust-std
+          ) crossTargets);
+          rustSrcPath = "${rustHostToolchain.rust-src}/lib/rustlib/src/rust/library";
+
+          nightlyToolchain = pkgs.fenix.complete.withComponents [
+            "cargo" "clippy" "rustc" "rustfmt" "rust-src"
           ];
+          nightlySrcPath = "${pkgs.fenix.complete.rust-src}/lib/rustlib/src/rust/library";
 
           cargoTools = with pkgs; [
             cargo-nextest cargo-watch cargo-expand cargo-audit cargo-zigbuild
@@ -83,7 +86,7 @@
 
           uvHook = ''
             if [ -f "pyproject.toml" ] || [ -f ".python-version" ]; then
-              UV_PY_VER="$(cat .python-version 2>/dev/null || echo 3.13)"
+              UV_PY_VER="$(cat .python-version 2>/dev/null || echo 3.14)"
               if ! uv python find "$UV_PY_VER" >/dev/null 2>&1; then
                 uv python install "$UV_PY_VER" >/dev/null || true
               fi
@@ -107,7 +110,7 @@
             shellHook = uvZshHook;
           };
 
-          # Language-specific (lean)
+          # Language-specific
           python = pkgs.mkShell {
             packages = minimal ++ pythonPkgs;
             shellHook = uvZshHook;
@@ -116,24 +119,22 @@
           python-rust = pkgs.mkShell {
             packages = minimal ++ buildTools ++ pythonPkgs ++ rustPkgs;
             shellHook = uvZshHook;
-            RUST_SRC_PATH = "${rustHostToolchain.rust-src}/lib/rustlib/src/rust/library";
+            RUST_SRC_PATH = rustSrcPath;
           };
 
           rust = pkgs.mkShell {
             packages = minimal ++ buildTools ++ rustPkgs;
             shellHook = zshHook;
-            RUST_SRC_PATH = "${rustHostToolchain.rust-src}/lib/rustlib/src/rust/library";
+            RUST_SRC_PATH = rustSrcPath;
           };
 
+          # Nightly — for unstable rustfmt options and features, not cross-compilation
           rust-nightly = pkgs.mkShell {
-            packages = minimal ++ buildTools ++ [
-              (pkgs.fenix.complete.withComponents [
-                "cargo" "clippy" "rustc" "rustfmt" "rust-src"
-              ])
-              pkgs.fenix.rust-analyzer
-            ] ++ cargoTools;
+            packages = minimal ++ buildTools
+              ++ [ nightlyToolchain pkgs.fenix.rust-analyzer ]
+              ++ cargoTools;
             shellHook = zshHook;
-            RUST_SRC_PATH = "${pkgs.fenix.complete.rust-src}/lib/rustlib/src/rust/library";
+            RUST_SRC_PATH = nightlySrcPath;
           };
 
           node = pkgs.mkShell {

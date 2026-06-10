@@ -70,7 +70,7 @@
 
           nodePkgs = with pkgs; [ nodejs_22 pnpm deno ];
 
-          javaPkgs = with pkgs; [ jdk17_headless javacc ];
+          javaPkgs = with pkgs; [ jdk25_headless javacc ];
 
           # All packages combined
           allPkgs = minimal ++ buildTools ++ services ++ media
@@ -135,6 +135,11 @@
               ++ cargoTools;
             shellHook = zshHook;
             RUST_SRC_PATH = nightlySrcPath;
+          };
+
+          java = pkgs.mkShell {
+            packages = minimal ++ javaPkgs;
+            shellHook = zshHook;
           };
 
           node = pkgs.mkShell {

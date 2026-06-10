@@ -23,7 +23,7 @@ alias ll='ls -lh'
 alias la='ls -A'
 alias lla='ls -lha'
 alias lsd='ls -d */'
-alias cls='printf "\e[H\e[2J\e[3J"'
+alias c='printf "\e[H\e[2J\e[3J"'
 alias grep='grep --color=auto'
 
 # functions

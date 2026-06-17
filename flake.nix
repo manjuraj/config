@@ -33,7 +33,7 @@
 
           media = with pkgs; [ ffmpeg whisper-cpp ];
 
-          pythonPkgs = with pkgs; [ uv ruff black ];
+          pythonPkgs = with pkgs; [ uv ruff black pyright ];
 
           # Pinned Rust toolchain — single source of truth for the version.
           # To bump: update `channel`, set `sha256` to `pkgs.lib.fakeHash`,

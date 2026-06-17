@@ -75,6 +75,9 @@ Plug 'jszakmeister/vim-togglecursor'
   let g:togglecursor_default = 'blinking_line'
   let g:togglecursor_insert = 'blinking_line'
 
+" LSP
+Plug 'yegappan/lsp'
+
 let g:polyglot_disabled = ['latex']  " vimtex handles LaTeX
 Plug 'sheerun/vim-polyglot'
 
@@ -374,6 +377,70 @@ nnoremap <silent> <Leader>f        :Rg<CR>
 nnoremap <silent> <Leader>rg       :Rg <C-R><C-W><CR>
 nnoremap <silent> <Leader>RG       :Rg <C-R><C-A><CR>
 xnoremap <silent> <Leader>rg       y:Rg <C-R>"<CR>
+
+" }}}
+
+" LSP {{{
+
+function! s:setup_lsp() abort
+  if exists('s:lsp_initialized')
+    return
+  endif
+  let s:lsp_initialized = 1
+  let lspServers = []
+
+  if executable('rust-analyzer')
+    call add(lspServers, #{
+      \ name: 'rust-analyzer',
+      \ filetype: ['rust'],
+      \ path: 'rust-analyzer',
+      \ args: [],
+      \ syncInit: v:false,
+      \ })
+  endif
+
+  if executable('pyright-langserver')
+    call add(lspServers, #{
+      \ name: 'pyright',
+      \ filetype: ['python'],
+      \ path: 'pyright-langserver',
+      \ args: ['--stdio'],
+      \ syncInit: v:false,
+      \ })
+  endif
+
+  if !empty(lspServers)
+    call LspAddServer(lspServers)
+    call LspOptionsSet(#{
+      \ autoHighlightDiags: v:false,
+      \ showDiagOnStatusLine: v:true,
+      \ autoComplete: v:false,
+      \ })
+  endif
+endfunction
+
+augroup lsp_setup
+  autocmd!
+  autocmd User LspSetup call s:setup_lsp()
+augroup END
+
+" LSP mappings — only active in buffers with a running server
+function! s:on_lsp_buffer() abort
+  nnoremap <buffer> gd :LspGotoDefinition<CR>
+  nnoremap <buffer> gr :LspShowReferences<CR>
+  nnoremap <buffer> K  :LspHover<CR>
+  nnoremap <buffer> <Leader>rn :LspRename<CR>
+  nnoremap <buffer> <Leader>ca :LspCodeAction<CR>
+  nnoremap <buffer> [d :LspDiag prev<CR>
+  nnoremap <buffer> ]d :LspDiag next<CR>
+  nnoremap <buffer> <Leader>e :LspDiag show<CR>
+endfunction
+
+augroup lsp_mappings
+  autocmd!
+  autocmd User LspAttached call s:on_lsp_buffer()
+  autocmd VimLeavePre * silent! LspStop
+augroup END
 
 " }}}
 

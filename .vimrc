@@ -413,7 +413,7 @@ function! s:setup_lsp() abort
     call LspAddServer(lspServers)
     call LspOptionsSet(#{
       \ autoHighlightDiags: v:false,
-      \ showDiagOnStatusLine: v:true,
+      \ showDiagOnStatusLine: v:false,
       \ autoComplete: v:false,
       \ })
   endif

@@ -33,6 +33,8 @@
 
           media = with pkgs; [ ffmpeg whisper-cpp ];
 
+          docsPkgs = with pkgs; [ mdbook ];
+
           pythonPkgs = with pkgs; [ uv ruff black pyright ];
 
           # Pinned Rust toolchain — single source of truth for the version.
@@ -74,7 +76,7 @@
 
           # All packages combined
           allPkgs = minimal ++ buildTools ++ services ++ media
-            ++ pythonPkgs ++ rustPkgs ++ nodePkgs ++ javaPkgs;
+            ++ docsPkgs ++ pythonPkgs ++ rustPkgs ++ nodePkgs ++ javaPkgs;
 
           # --- Hooks ---
           zshHook = ''
@@ -123,7 +125,7 @@
           };
 
           rust = pkgs.mkShell {
-            packages = minimal ++ buildTools ++ rustPkgs;
+            packages = minimal ++ buildTools ++ docsPkgs ++ rustPkgs;
             shellHook = zshHook;
             RUST_SRC_PATH = rustSrcPath;
           };

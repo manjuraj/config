@@ -83,7 +83,9 @@
           zshHook = ''
             export SHELL=${zshBin}
             if [ -z "$ZSH_VERSION" ] && [ -z "$DIRENV_IN_ENVRC" ]; then
-              exec ${zshBin} -l
+              case "$-" in
+                *i*) exec ${zshBin} -l ;;
+              esac
             fi
           '';
 

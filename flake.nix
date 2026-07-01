@@ -29,7 +29,7 @@
             autoconf automake libtool
           ] ++ pkgs.lib.optionals pkgs.stdenv.isDarwin [ pkgs.libiconv ];
 
-          services = with pkgs; [ redis memcached postgresql ];
+          services = with pkgs; [ redis memcached postgresql vector ];
 
           media = with pkgs; [ ffmpeg whisper-cpp ];
 
@@ -65,6 +65,7 @@
 
           cargoTools = with pkgs; [
             cargo-nextest cargo-watch cargo-expand cargo-audit cargo-zigbuild
+            asciinema-agg
           ];
 
           rustPkgs = [ rustToolchain pkgs.fenix.rust-analyzer ]

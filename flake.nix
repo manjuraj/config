@@ -71,7 +71,7 @@
           rustPkgs = [ rustToolchain pkgs.fenix.rust-analyzer ]
             ++ cargoTools;
 
-          nodePkgs = with pkgs; [ nodejs_22 pnpm deno ];
+          nodePkgs = with pkgs; [ nodejs_24 pnpm deno ];
 
           javaPkgs = with pkgs; [ jdk25_headless javacc ];
 

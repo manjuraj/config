@@ -73,11 +73,17 @@
 
           nodePkgs = with pkgs; [ nodejs_24 pnpm deno ];
 
+          haskellPkgs = with pkgs; [
+            ghc cabal-install haskell-language-server
+            hlint fourmolu
+          ];
+
           javaPkgs = with pkgs; [ jdk25_headless javacc ];
 
           # All packages combined
           allPkgs = minimal ++ buildTools ++ services ++ media
-            ++ docsPkgs ++ pythonPkgs ++ rustPkgs ++ nodePkgs ++ javaPkgs;
+            ++ docsPkgs ++ pythonPkgs ++ rustPkgs ++ nodePkgs
+            ++ haskellPkgs ++ javaPkgs;
 
           # --- Hooks ---
           zshHook = ''
@@ -149,6 +155,11 @@
 
           node = pkgs.mkShell {
             packages = minimal ++ nodePkgs;
+            shellHook = zshHook;
+          };
+
+          haskell = pkgs.mkShell {
+            packages = minimal ++ buildTools ++ haskellPkgs;
             shellHook = zshHook;
           };
         }

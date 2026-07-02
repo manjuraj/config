@@ -31,6 +31,10 @@
 
           services = with pkgs; [ redis memcached postgresql vector ];
 
+          runtimeTools = with pkgs; [
+            docker-client docker-compose process-compose
+          ];
+
           media = with pkgs; [ ffmpeg whisper-cpp ];
 
           docsPkgs = with pkgs; [ mdbook ];
@@ -156,6 +160,13 @@
           node = pkgs.mkShell {
             packages = minimal ++ nodePkgs;
             shellHook = zshHook;
+          };
+
+          rust-typescript = pkgs.mkShell {
+            packages = minimal ++ buildTools ++ services ++ rustPkgs
+              ++ nodePkgs ++ runtimeTools;
+            shellHook = zshHook;
+            RUST_SRC_PATH = rustSrcPath;
           };
 
           haskell = pkgs.mkShell {

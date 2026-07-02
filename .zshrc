@@ -25,6 +25,7 @@ alias lla='ls -lha'
 alias lsd='ls -d */'
 alias c='printf "\e[H\e[2J\e[3J"'
 alias grep='grep --color=auto'
+alias chrome="open -a 'Google Chrome'"
 
 # functions
 glow_p() { glow -p -w "$COLUMNS" "$1";}

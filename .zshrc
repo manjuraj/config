@@ -28,7 +28,7 @@ alias grep='grep --color=auto'
 alias chrome="open -a 'Google Chrome'"
 
 # functions
-glow_p() { glow -p -w "$COLUMNS" "$1";}
+glow_p() { LESS="-M +Gg" glow -p -w "$COLUMNS" "$1";}
 alias gp='glow_p'
 
 # named directories

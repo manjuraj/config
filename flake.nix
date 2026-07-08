@@ -37,7 +37,7 @@
 
           media = with pkgs; [ ffmpeg whisper-cpp ];
 
-          docsPkgs = with pkgs; [ mdbook ];
+          docsPkgs = with pkgs; [ mdbook mdbook-mermaid ];
 
           pythonPkgs = with pkgs; [ uv ruff black pyright ];
 

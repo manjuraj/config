@@ -22,7 +22,7 @@
           zshBin = pkgs.lib.getExe pkgs.zsh;
 
           # --- Package Groups ---
-          minimal = with pkgs; [ zsh gh bat jq ripgrep ];
+          minimal = with pkgs; [ zsh gh bat jq ripgrep just ];
 
           buildTools = with pkgs; [
             pkg-config clang

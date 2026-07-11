@@ -18,6 +18,12 @@ Wrap prose at about 80 columns.
 
 Do not hard-wrap tables, URLs, code blocks, headings, or generated snippets.
 
+## HTML Artifact Guidelines
+
+Refer to
+`$HOME/Development/Mad-Labs/agent-references/html-artifact-guidelines.md` when
+creating or changing human-facing HTML artifacts.
+
 ## Development Environment
 
 If a repository contains a `.envrc`, treat `direnv exec . ...` as the default

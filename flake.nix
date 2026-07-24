@@ -22,7 +22,7 @@
           zshBin = pkgs.lib.getExe pkgs.zsh;
 
           # --- Package Groups ---
-          minimal = with pkgs; [ zsh gh bat jq ripgrep just google-cloud-sdk ];
+          minimal = with pkgs; [ zsh gh bat jq ripgrep just ];
 
           buildTools = with pkgs; [
             pkg-config clang
@@ -34,6 +34,8 @@
           runtimeTools = with pkgs; [
             docker-client docker-compose process-compose k3d
           ];
+
+          cloudTools = with pkgs; [ google-cloud-sdk ];
 
           media = with pkgs; [ ffmpeg whisper-cpp ];
 
@@ -86,8 +88,8 @@
 
           # All packages combined
           allPkgs = minimal ++ buildTools ++ services ++ media
-            ++ runtimeTools ++ docsPkgs ++ pythonPkgs ++ rustPkgs ++ nodePkgs
-            ++ haskellPkgs ++ javaPkgs;
+            ++ runtimeTools ++ cloudTools ++ docsPkgs ++ pythonPkgs
+            ++ rustPkgs ++ nodePkgs ++ haskellPkgs ++ javaPkgs;
 
           # --- Hooks ---
           zshHook = ''

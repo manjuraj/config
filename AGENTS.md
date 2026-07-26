@@ -18,16 +18,28 @@ Wrap prose at about 80 columns.
 
 Do not hard-wrap tables, URLs, code blocks, headings, or generated snippets.
 
+Refer to `$HOME/Development/Mad-Labs/agent-references/MERMAID.md` when creating
+or changing Mermaid diagrams in Markdown.
+
 ## HTML Artifact Guidelines
 
 Refer to
 `$HOME/Development/Mad-Labs/agent-references/html-artifact-guidelines.md` when
 creating or changing human-facing HTML artifacts.
 
+## Serde Guidelines
+
+Refer to `$HOME/Development/Mad-Labs/agent-references/SERDE.md` when designing or
+changing Serde serialization and deserialization in Rust projects.
+
 ## Development Environment
 
 If a repository contains a `.envrc`, treat `direnv exec . ...` as the default
 way to run all repo-local commands.
+
+A repository's `.envrc` may place Nix-provided tools on `PATH`. Inspect the
+active environment when command behavior matters. Do not assume macOS/BSD or
+GNU semantics unless the repository declares the relevant tool.
 
 Run those commands from the repository root so the correct toolchain,
 environment variables, and dependencies are loaded.

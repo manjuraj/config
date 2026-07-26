@@ -28,8 +28,24 @@ alias grep='grep --color=auto'
 alias chrome="open -a 'Google Chrome'"
 
 # functions
-glow_p() { LESS="-M +Gg" glow -p -w "$COLUMNS" "$1";}
+glow_p() { LESS="-M +Gg" glow -p -w "$COLUMNS" "${1:--}";}
 alias gp='glow_p'
+
+# convert mermaid blocks to ascii, then preview with gp
+glow_pm() {
+  python3 -c '
+import re, subprocess, sys
+s = open(sys.argv[1]).read()
+def convert(m):
+    r = subprocess.run(
+        ["npx", "-y", "mermaid-ascii", "-f", "-", "-x", "1", "-y", "1", "-p", "0"],
+        input=m.group(1), capture_output=True, text=True
+    )
+    return "```\n" + r.stdout + "```"
+print(re.sub(r"```mermaid\n(.*?)```", convert, s, flags=re.S))
+' "$1" | glow_p
+}
+alias gpm='glow_pm'
 
 # named directories
 hash -d dev="$HOME/Development"

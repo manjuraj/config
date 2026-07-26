@@ -71,7 +71,7 @@
 
           cargoTools = with pkgs; [
             cargo-nextest cargo-watch cargo-expand cargo-audit cargo-zigbuild
-            asciinema-agg
+            cargo-sweep asciinema-agg
           ];
 
           rustPkgs = [ rustToolchain pkgs.fenix.rust-analyzer ]
@@ -129,7 +129,7 @@
 
           # Language-specific
           python = pkgs.mkShell {
-            packages = minimal ++ pythonPkgs;
+            packages = minimal ++ runtimeTools ++ pythonPkgs;
             shellHook = uvZshHook;
           };
 

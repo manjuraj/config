@@ -37,6 +37,8 @@
 
           cloudTools = with pkgs; [ google-cloud-sdk ];
 
+          baseTools = minimal ++ cloudTools;
+
           media = with pkgs; [ ffmpeg whisper-cpp ];
 
           docsPkgs = with pkgs; [ mdbook mdbook-mermaid ];
@@ -87,8 +89,8 @@
           javaPkgs = with pkgs; [ jdk25_headless javacc ];
 
           # All packages combined
-          allPkgs = minimal ++ buildTools ++ services ++ media
-            ++ runtimeTools ++ cloudTools ++ docsPkgs ++ pythonPkgs
+          allPkgs = baseTools ++ buildTools ++ services ++ media
+            ++ runtimeTools ++ docsPkgs ++ pythonPkgs
             ++ rustPkgs ++ nodePkgs ++ haskellPkgs ++ javaPkgs;
 
           # --- Hooks ---
@@ -129,25 +131,25 @@
 
           # Language-specific
           python = pkgs.mkShell {
-            packages = minimal ++ runtimeTools ++ pythonPkgs;
+            packages = baseTools ++ runtimeTools ++ pythonPkgs;
             shellHook = uvZshHook;
           };
 
           python-rust = pkgs.mkShell {
-            packages = minimal ++ buildTools ++ pythonPkgs ++ rustPkgs;
+            packages = baseTools ++ buildTools ++ pythonPkgs ++ rustPkgs;
             shellHook = uvZshHook;
             RUST_SRC_PATH = rustSrcPath;
           };
 
           rust = pkgs.mkShell {
-            packages = minimal ++ buildTools ++ docsPkgs ++ rustPkgs;
+            packages = baseTools ++ buildTools ++ docsPkgs ++ rustPkgs;
             shellHook = zshHook;
             RUST_SRC_PATH = rustSrcPath;
           };
 
           # Nightly — for unstable rustfmt options and features, not cross-compilation
           rust-nightly = pkgs.mkShell {
-            packages = minimal ++ buildTools
+            packages = baseTools ++ buildTools
               ++ [ nightlyToolchain pkgs.fenix.rust-analyzer ]
               ++ cargoTools;
             shellHook = zshHook;
@@ -155,24 +157,24 @@
           };
 
           java = pkgs.mkShell {
-            packages = minimal ++ javaPkgs;
+            packages = baseTools ++ javaPkgs;
             shellHook = zshHook;
           };
 
           node = pkgs.mkShell {
-            packages = minimal ++ nodePkgs;
+            packages = baseTools ++ nodePkgs;
             shellHook = zshHook;
           };
 
           rust-typescript = pkgs.mkShell {
-            packages = minimal ++ buildTools ++ services ++ rustPkgs
+            packages = baseTools ++ buildTools ++ services ++ rustPkgs
               ++ nodePkgs ++ runtimeTools;
             shellHook = zshHook;
             RUST_SRC_PATH = rustSrcPath;
           };
 
           haskell = pkgs.mkShell {
-            packages = minimal ++ buildTools ++ haskellPkgs;
+            packages = baseTools ++ buildTools ++ haskellPkgs;
             shellHook = zshHook;
           };
         }

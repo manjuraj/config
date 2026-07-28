@@ -37,7 +37,9 @@
 
           cloudTools = with pkgs; [ google-cloud-sdk ];
 
-          baseTools = minimal ++ cloudTools;
+          ciTools = with pkgs; [ actionlint ];
+
+          baseTools = minimal ++ cloudTools ++ ciTools;
 
           media = with pkgs; [ ffmpeg whisper-cpp ];
 

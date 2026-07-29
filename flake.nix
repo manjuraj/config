@@ -39,7 +39,9 @@
 
           ciTools = with pkgs; [ actionlint shellcheck ];
 
-          baseTools = minimal ++ cloudTools ++ ciTools;
+          infraTools = with pkgs; [ opentofu ];
+
+          baseTools = minimal ++ cloudTools ++ ciTools ++ infraTools;
 
           media = with pkgs; [ ffmpeg whisper-cpp ];
 

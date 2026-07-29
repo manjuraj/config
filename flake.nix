@@ -37,7 +37,7 @@
 
           cloudTools = with pkgs; [ google-cloud-sdk ];
 
-          ciTools = with pkgs; [ actionlint ];
+          ciTools = with pkgs; [ actionlint shellcheck ];
 
           baseTools = minimal ++ cloudTools ++ ciTools;
 

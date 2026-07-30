@@ -37,7 +37,7 @@
 
           cloudTools = with pkgs; [ google-cloud-sdk ];
 
-          ciTools = with pkgs; [ actionlint shellcheck ];
+          ciTools = with pkgs; [ actionlint shellcheck yamllint ];
 
           infraTools = with pkgs; [ opentofu ];
 

@@ -24,13 +24,8 @@ or changing Mermaid diagrams in Markdown.
 ## HTML Artifact Guidelines
 
 Refer to
-`$HOME/Development/Mad-Labs/agent-references/html-artifact-guidelines.md` when
+`$HOME/Development/Mad-Labs/agent-references/HTML.md` when
 creating or changing human-facing HTML artifacts.
-
-## Serde Guidelines
-
-Refer to `$HOME/Development/Mad-Labs/agent-references/SERDE.md` when designing or
-changing Serde serialization and deserialization in Rust projects.
 
 ## Development Environment
 
@@ -44,8 +39,10 @@ loaded, show `<command>` directly.
 
 ## Git Commit Guidelines
 
-Refer to `$HOME/Development/Mad-Labs/agent-references/git-commit-guidelines.md` when
-writing git commit messages.
+Refer to `$HOME/Development/Mad-Labs/agent-references/GIT-COMMIT.md` when writing
+git commit messages.
 
-Never add a `Co-Authored-By` trailer, or any co-authoring attribution, to
-commit messages.
+## Git Worktree Guidelines
+
+Refer to `$HOME/Development/Mad-Labs/agent-references/GIT-WORKTREE.md` when
+creating, moving, repairing, or removing Git worktrees.

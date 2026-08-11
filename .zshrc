@@ -31,6 +31,23 @@ alias chrome="open -a 'Google Chrome'"
 glow_p() { LESS="-M +Gg" glow -p -w "$COLUMNS" "${1:--}";}
 alias gp='glow_p'
 
+nix-cleanup() {
+  printf 'Nix store before:\n'
+  du -sh /nix/store
+
+  printf '\nDeleting old user profile generations...\n'
+  nix-collect-garbage -d
+
+  printf '\nDeleting old root/system profile generations...\n'
+  sudo nix-collect-garbage -d
+
+  printf '\nOptimising store paths...\n'
+  nix store optimise
+
+  printf '\nNix store after:\n'
+  du -sh /nix/store
+}
+
 # convert mermaid blocks to ascii, then preview with gp
 glow_pm() {
   python3 -c '

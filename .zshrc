@@ -48,6 +48,12 @@ nix-cleanup() {
   du -sh /nix/store
 }
 
+sccache-reset() {
+  sccache --stop-server
+  rm -rf '/Users/manjurajashekhar/Library/Caches/Mozilla.sccache'
+  sccache --start-server
+}
+
 # convert mermaid blocks to ascii, then preview with gp
 glow_pm() {
   python3 -c '

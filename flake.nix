@@ -27,7 +27,7 @@
           buildTools = with pkgs; [
             pkg-config clang
             autoconf automake libtool
-          ] ++ pkgs.lib.optionals pkgs.stdenv.isDarwin [ pkgs.libiconv ];
+          ] ++ pkgs.lib.optionals pkgs.stdenv.hostPlatform.isDarwin [ pkgs.libiconv ];
 
           services = with pkgs; [ redis memcached postgresql vector ];
 

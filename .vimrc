@@ -78,7 +78,10 @@ Plug 'jszakmeister/vim-togglecursor'
 " LSP
 Plug 'yegappan/lsp'
 
-let g:polyglot_disabled = ['latex']  " vimtex handles LaTeX
+" vimtex handles LaTeX. Use Vim's newer Haskell syntax instead of polyglot's
+" bundled copy, which assigns most names to the gold Type group in seoul256.
+let g:polyglot_disabled = ['latex', 'haskell']
+let g:hs_highlight_types = 1
 Plug 'sheerun/vim-polyglot'
 
 " Latex
@@ -87,6 +90,13 @@ Plug 'lervag/vimtex'
   let g:vimtex_quickfix_mode = 0
   let g:tex_conceal = 'abdmg'
 
+let g:vim_markdown_fenced_languages = [
+  \ 'haskell',
+  \ 'rust',
+  \ 'python',
+  \ 'bash=sh',
+  \ 'javascript'
+  \ ]
 
 call plug#end()
 
@@ -236,6 +246,15 @@ endif
 "   Default: 237
 let g:seoul256_background = 235
 silent! colorscheme seoul256
+
+" The built-in Haskell syntax calls capitalized names ConId. They can be types
+" or data constructors, so color both without tinting ordinary identifiers.
+highlight def link ConId Type
+
+augroup haskell_markdown_syntax
+  autocmd!
+  autocmd BufWinEnter * if &filetype ==# 'markdown' | syntax case match | endif
+augroup END
 
 " }}}
 

@@ -77,10 +77,10 @@
 
           cargoTools = with pkgs; [
             cargo-nextest cargo-watch cargo-expand cargo-audit cargo-zigbuild
-            cargo-sweep asciinema-agg
+            cargo-sweep asciinema-agg sccache
           ];
 
-          rustPkgs = [ rustToolchain pkgs.fenix.rust-analyzer ]
+          rustPkgs = [ rustToolchain pkgs.fenix.rust-analyzer pkgs.lld ]
             ++ cargoTools;
 
           nodePkgs = with pkgs; [ nodejs_24 pnpm deno ];

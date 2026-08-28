@@ -14,6 +14,9 @@ export PATH="/opt/homebrew/opt/node@22/bin:$PATH"
 # python (unversioned symlinks: python, pip, etc.)
 export PATH="/opt/homebrew/opt/python@3.14/libexec/bin:$PATH"
 
+# cargo
+export PATH="$HOME/.cargo/bin:$PATH"
+
 # editor
 export EDITOR="vim"
 export VISUAL="$EDITOR"

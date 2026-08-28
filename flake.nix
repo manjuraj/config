@@ -22,10 +22,10 @@
           zshBin = pkgs.lib.getExe pkgs.zsh;
 
           # --- Package Groups ---
-          minimal = with pkgs; [ zsh gh bat jq ripgrep just ];
+          minimal = with pkgs; [ zsh gh bat hyperfine jq ripgrep just ];
 
           buildTools = with pkgs; [
-            pkg-config clang
+            pkg-config clang zig
             autoconf automake libtool
           ] ++ pkgs.lib.optionals pkgs.stdenv.hostPlatform.isDarwin [ pkgs.libiconv ];
 
@@ -58,7 +58,9 @@
           };
           crossTargets = [
             "aarch64-unknown-linux-gnu"
+            "aarch64-unknown-linux-musl"
             "x86_64-unknown-linux-gnu"
+            "x86_64-unknown-linux-musl"
           ];
           rustHostToolchain = pkgs.fenix.toolchainOf rustManifest;
           rustToolchain = pkgs.fenix.combine ([

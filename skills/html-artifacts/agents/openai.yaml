@@ -1,0 +1,7 @@
+interface:
+  display_name: "HTML Artifacts"
+  short_description: "Build and verify human-facing HTML"
+  default_prompt: "Use $html-artifacts to create or change this human-facing HTML artifact."
+
+policy:
+  allow_implicit_invocation: false

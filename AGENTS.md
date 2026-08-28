@@ -21,12 +21,6 @@ Do not hard-wrap tables, URLs, code blocks, headings, or generated snippets.
 Refer to `$HOME/Development/Mad-Labs/agent-references/MERMAID.md` when creating
 or changing Mermaid diagrams in Markdown.
 
-## HTML Artifact Guidelines
-
-Refer to
-`$HOME/Development/Mad-Labs/agent-references/HTML.md` when
-creating or changing human-facing HTML artifacts.
-
 ## Development Environment
 
 If a repository contains a `.envrc`, use its environment for repo-local commands.

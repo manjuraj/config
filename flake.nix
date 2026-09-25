@@ -34,7 +34,7 @@
             autoconf automake libtool
           ] ++ pkgs.lib.optionals pkgs.stdenv.hostPlatform.isDarwin [ pkgs.libiconv ];
 
-          services = with pkgs; [ redis memcached postgresql vector ];
+          services = with pkgs; [ redis memcached postgresql ];
 
           runtimeTools = with pkgs; [
             docker-client docker-compose process-compose k3d

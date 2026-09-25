@@ -20,9 +20,14 @@
             overlays = [ fenix.overlays.default ];
           };
           zshBin = pkgs.lib.getExe pkgs.zsh;
+          # Go 1.27 lets a hard macOS sandbox use a mounted PEM bundle instead
+          # of Security.framework's unavailable trust service.
+          ghSandbox = pkgs.gh.override {
+            buildGoModule = pkgs.buildGo127Module;
+          };
 
           # --- Package Groups ---
-          minimal = with pkgs; [ zsh gh bat hyperfine jq ripgrep just ];
+          minimal = with pkgs; [ zsh ghSandbox bat hyperfine jq ripgrep just ];
 
           buildTools = with pkgs; [
             pkg-config clang zig

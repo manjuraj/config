@@ -40,7 +40,57 @@
             docker-client docker-compose process-compose k3d
           ];
 
-          cloudTools = with pkgs; [ google-cloud-sdk ];
+          # To bump: update `nebiusVersion`, then refresh each hash with
+          # `nix store prefetch-file <url>`.
+          nebiusVersion = "0.12.280";
+          nebiusReleases = {
+            "aarch64-darwin" = {
+              os = "darwin";
+              arch = "arm64";
+              hash = "sha256-v10vrm2v/RYGyiIXZy4+UsAssNtVTIuYIoLWlyR1DiY=";
+            };
+            "aarch64-linux" = {
+              os = "linux";
+              arch = "arm64";
+              hash = "sha256-RP3IbM/rPhJWjHclEGfCQzcH0jDjuZDtgUMoUtEEba0=";
+            };
+            "x86_64-linux" = {
+              os = "linux";
+              arch = "x86_64";
+              hash = "sha256-LjAg2RtWgF4lagAief8iLZ+zvQ9VUIGMseNMEKmTO9Q=";
+            };
+          };
+          nebiusRelease = nebiusReleases.${system}
+            or (throw "nebius: unsupported system ${system}");
+          nebiusCli = pkgs.stdenvNoCC.mkDerivation {
+            pname = "nebius";
+            version = nebiusVersion;
+            src = pkgs.fetchurl {
+              url = "https://storage.eu-north1.nebius.cloud/cli/release/${nebiusVersion}/${nebiusRelease.os}/${nebiusRelease.arch}/nebius";
+              inherit (nebiusRelease) hash;
+            };
+            dontUnpack = true;
+            installPhase = ''
+              runHook preInstall
+              install -Dm755 "$src" "$out/bin/nebius"
+              runHook postInstall
+            '';
+            doInstallCheck = true;
+            installCheckPhase = ''
+              runHook preInstallCheck
+              [ "$("$out/bin/nebius" version)" = "${nebiusVersion}" ]
+              runHook postInstallCheck
+            '';
+            meta = {
+              description = "Nebius AI Cloud command-line interface";
+              homepage = "https://docs.nebius.com/cli";
+              mainProgram = "nebius";
+              platforms = builtins.attrNames nebiusReleases;
+              sourceProvenance = [ pkgs.lib.sourceTypes.binaryNativeCode ];
+            };
+          };
+
+          cloudTools = with pkgs; [ google-cloud-sdk nebiusCli ];
 
           ciTools = with pkgs; [ actionlint shellcheck yamllint ];
 

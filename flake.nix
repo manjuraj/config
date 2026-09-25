@@ -244,6 +244,13 @@
             RUST_SRC_PATH = rustSrcPath;
           };
 
+          rust-typescript-python = pkgs.mkShell {
+            packages = baseTools ++ buildTools ++ services ++ pythonPkgs
+              ++ rustPkgs ++ nodePkgs ++ runtimeTools;
+            shellHook = uvZshHook;
+            RUST_SRC_PATH = rustSrcPath;
+          };
+
           haskell = pkgs.mkShell {
             packages = baseTools ++ buildTools ++ haskellPkgs;
             shellHook = zshHook;

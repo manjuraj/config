@@ -102,6 +102,11 @@
 
           docsPkgs = with pkgs; [ mdbook mdbook-mermaid ];
 
+          latexPkgs = with pkgs; [
+            (texliveMedium.withPackages (ps: [ ps.latexmk ]))
+            biber
+          ];
+
           pythonPkgs = with pkgs; [ uv ruff black pyright ];
 
           # Pinned Rust toolchain — single source of truth for the version.
@@ -151,7 +156,7 @@
 
           # All packages combined
           allPkgs = baseTools ++ buildTools ++ services ++ media
-            ++ runtimeTools ++ docsPkgs ++ pythonPkgs
+            ++ runtimeTools ++ docsPkgs ++ latexPkgs ++ pythonPkgs
             ++ rustPkgs ++ nodePkgs ++ haskellPkgs ++ javaPkgs;
 
           # --- Hooks ---
@@ -224,6 +229,11 @@
 
           node = pkgs.mkShell {
             packages = baseTools ++ nodePkgs;
+            shellHook = zshHook;
+          };
+
+          latex = pkgs.mkShell {
+            packages = baseTools ++ latexPkgs;
             shellHook = zshHook;
           };
 

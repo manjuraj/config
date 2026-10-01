@@ -96,7 +96,8 @@
 
           infraTools = with pkgs; [ opentofu ];
 
-          baseTools = minimal ++ cloudTools ++ ciTools ++ infraTools;
+          baseTools = minimal ++ cloudTools ++ ciTools ++ infraTools
+            ++ [ pkgs.pandoc ];
 
           media = with pkgs; [ ffmpeg whisper-cpp ];
 

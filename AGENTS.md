@@ -38,5 +38,9 @@ git commit messages.
 
 ## Git Worktree Guidelines
 
+Work in the existing checkout by default. Create a worktree only when the user
+requests one or concurrent work requires isolation. Do not create a worktree
+solely to keep the primary checkout on the trunk branch.
+
 Refer to `$HOME/Development/Mad-Labs/agent-references/GIT-WORKTREE.md` when
 creating, moving, repairing, or removing Git worktrees.

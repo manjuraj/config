@@ -114,8 +114,8 @@
           # To bump: update `channel`, set `sha256` to `pkgs.lib.fakeHash`,
           # run `nix develop`, paste the real hash nix prints.
           rustManifest = {
-            channel = "1.97.1";
-            sha256 = "sha256-A1abGIbOtcBSdrUMhDGrER3pRM1hQP4fp9gh3Y4PKc8=";
+            channel = "1.100.0";
+            sha256 = "sha256-MFHoWVcPZKjFrLnQnodCXbUsfZcofGfo9tV9fTTvklg=";
           };
           crossTargets = [
             "aarch64-unknown-linux-gnu"

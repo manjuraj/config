@@ -143,7 +143,13 @@
             cargo-sweep asciinema-agg sccache
           ];
 
-          rustPkgs = [ rustToolchain pkgs.fenix.rust-analyzer pkgs.lld ]
+          rustPkgs = [
+            rustToolchain pkgs.fenix.rust-analyzer pkgs.lld
+            (pkgs.evcxr.override {
+              cargo = rustToolchain;
+              rustc = rustToolchain;
+            })
+          ]
             ++ cargoTools;
 
           nodePkgs = with pkgs; [ nodejs_24 pnpm deno ];
@@ -217,7 +223,13 @@
           # Nightly — for unstable rustfmt options and features, not cross-compilation
           rust-nightly = pkgs.mkShell {
             packages = baseTools ++ buildTools
-              ++ [ nightlyToolchain pkgs.fenix.rust-analyzer ]
+              ++ [
+                nightlyToolchain pkgs.fenix.rust-analyzer
+                (pkgs.evcxr.override {
+                  cargo = nightlyToolchain;
+                  rustc = nightlyToolchain;
+                })
+              ]
               ++ cargoTools;
             shellHook = zshHook;
             RUST_SRC_PATH = nightlySrcPath;
